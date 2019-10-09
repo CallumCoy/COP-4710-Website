@@ -1,0 +1,256 @@
+-- User related tables located below --
+
+CREATE TABLE Users (
+	UserID int NOT NULL,
+	Username nvarchar(63) NOT NULL,
+	Password nvarchar(255) NOT NULL,
+	UserProfilePicture nvarchar(255),
+	Email nvarchar(127),
+	Bio varchar,
+	RSO_ID int,
+	SchoolID int,
+	
+	PRIMARY KEY (UserID),
+	
+	FOREIGN KEY (RSO_ID)
+		REFERENCES RSO(RSO_ID)
+		ON DELETE CASCADE,
+	
+	FOREIGN KEY (SchoolID)
+		REFERENCES School(SchoolID)
+		ON DELETE CASCADE
+)
+
+CREATE TABLE Admins (
+	UserID int NOT NULL,
+	RSO_ID int NOT NULL,
+	
+	PRIMARY KEY (UserID, RSO_ID),
+	
+	FOREIGN KEY (UserID)
+		REFERENCES Users(UserID)
+		ON DELETE RESTRICT,
+	
+	FOREIGN KEY (RSO_ID)
+		REFERENCES RSO(RSO_ID)
+		ON DELETE CASCADE
+)
+
+CREATE TABLE Members(
+
+	UserID int NOT NULL,
+	RSO_ID int NOT NULL,
+	
+	PRIMARY KEY (UserID, RSO_ID),
+	
+	FOREIGN KEY (UserID)
+		REFERENCES Users(UserID)
+		ON DELETE CASCADE,
+	
+	FOREIGN KEY (RSO_ID)
+		REFERENCES RSO(RSO_ID)
+		ON DELETE CASCADE
+)
+
+CREATE TABLE Super_Admins (
+	UserID int NOT NULL,
+	SchoolID int NOT NULL,
+	
+	PRIMARY KEY (SchoolID, RSO_ID),
+	
+	FOREIGN KEY (UserID)
+		REFERENCES Users(UserID)
+		ON DELETE RESTRICT,
+		
+	FOREIGN KEY (SchoolID)
+		REFERENCES Users(SchoolID)
+		ON DELETE CASCADE
+)
+
+CREATE TABLE Students(
+	UserID int NOT NULL,
+	SchoolID int NOT NULL,
+	
+	PRIMARY KEY (SchoolID, RSO_ID),
+	
+	FOREIGN KEY (UserID)
+		REFERENCES Users(UserID)
+		ON DELETE CASCADE,
+		
+	FOREIGN KEY (SchoolID)
+		REFERENCES Users(SchoolID)
+		ON DELETE CASCADE
+)
+
+CREATE TABLE Non_RSO_Event(
+	UserID int NOT NULL,
+	SuperAdminID int,
+	EventID int NOT NULL,
+	
+	PRIMARY KEY (UserID, EventID),
+	
+	FOREIGN KEY (UserID)
+		REFERENCES Users(UserID)
+		ON DELETE CASCADE,
+		
+	FOREIGN KEY (EventID)
+		REFERENCES Event(EventID)
+		ON DELETE CASCADE,
+	
+	FOREIGN KEY (SuperAdminID)
+		REFERENCES Super_Admins(UserID)
+		ON DELETE CASCADE
+
+-- Recognised School Organizations tables located beloww
+
+CREATE TABLE RSO (
+	RSO_ID int NOT NULL,
+	RSO_Name nvarchar(255) NOT NULL,
+	RSO_CreationDate DATE,
+	NumofMembers int NOT NULL,
+	RSO_Desc nvarchar,
+	RSO_ProfPic nvarchar(255) NOT NULL,
+	
+	PRIMARY KEY (RSO_ID)
+)
+
+CREATE TABLE RSO_Pics (
+	PicID int NOT NULL,
+	Dir nvarchar(255) NOT NULL,
+	RSO_ID int NOT NULL,
+	
+	PRIMARY KEY (PicID, RSO_ID)
+	
+	FOREIGN KEY (RSO_ID)
+		REFERENCES RSO(RSO_ID)
+		ON DELETE CASCADE
+)
+
+CREATE TABLE RSO_Ran_Event (
+	HostID int NOT NULL,
+	EventID int NOT NULL,
+	PRIMARY KEY (HostID, EventID),
+	
+	FOREIGN KEY HostID
+		REFERENCES Member(UserID),
+	
+	FOREIGN KEY EventID
+		REFERENCES Event(EventID)
+)
+
+-- School related tables below --
+
+CREATE TABLE School (
+	SchoolID int NOT NULL,
+	SchoolName nvarchar(255) NOT NULL,
+	SchoolPic nvarchar(255) NOT NULL,
+	SchoolDesc nvarchar,
+	NumOfStudents int NOT NULL,
+	NumOfRSOSs int NOT NULL,
+	SchoolLat real,
+	School_long real,
+	
+	PRIMARY KEY (SchoolID)
+)
+
+CREATE TABLE SchoolPictures (
+	PicID int NOT NULL,
+	PicDir nvarchar(255) NOT NULL,
+	SchoolID int NOT NULL,
+	
+	PRIMARY KEY (PicID, SchoolID),
+	
+	FOREIGN KEY (SchoolID)
+		REFERENCES School(SchoolID)
+		ON DELETE CASCADE
+)
+
+-- Event related tables below --
+
+CREATE TABLE Event (
+	EventID int NOT NULL,
+	EventName nvarchar(127) NOT NULL,
+	EventPic nvarchar(255) NOT NULL,
+	MainLocationID int NOT NULL,
+	StartDate DATE NOT NULL,
+	StartTime TIME NOT NULL,
+	EndTime TIME NOT NULL,
+	EndDate DATE,
+	EventDesc nvarchar,
+	InviteType int NOT NULL,
+	Host_RSO_ID int,
+	
+	PRIMARY KEY (EventID),
+	
+	FOREIGN KEY (MainLocationID)
+		REFERENCES Locations(locationID)
+		ON DELETE RESTRICT,
+	
+	FOREIGN KEY (Host_RSO_ID)
+		REFERENCES Users(UserID)
+		ON SET NULL -- need a check here to see
+)
+
+CREATE TABLE EventType(
+	EventID int NOT NULL,
+	TypeID int NOT NULL,
+	
+	PRIMARY KEY (EventID, TypeID),
+	
+	FOREIGN KEY (EventID)
+		REFERENCES Event(EventID)
+		ON DELETE CASCADE,
+		
+	FOREIGN KEY (TypeID)
+		REFERENCES Types(TypeID),
+		ON DELETE CASCADE
+)
+
+CREATE TABLE Types(
+	TypeID int NOT NULL,
+	TypeName nvarchar(31),
+	
+	PRIMARY KEY TypeID
+)
+
+CREATE TABLE EventPics (
+	PicID int NOT NULL,
+	PicDir nvarchar(255) NOT NULL,
+	EventID NOT NULL,
+	
+	PRIMARY KEY (PicID, EventID),
+	
+	FOREIGN KEY (EventID)
+		REFERENCES Event(EventID)
+		ON DELETE CASCADE
+)
+
+CREATE TABLE Locations(
+	locID int NOT NULL,
+	locName nvarchar(63) NOT NULL UNIQUE,
+	longitude real NOT NULL,
+	latitude real NOT NULL,
+	floorNum int,
+	Room int,
+	
+	PRIMARY KEY (locID)
+)
+
+CREATE TABLE Commented (
+	UserID int NOT NULL,
+	EventID int NOT NULL,
+	Rating real NOT NULL,
+	Text nvarchar(2000),
+	timeStamps TIME,
+	dayOfPost DATE,
+	
+	PRIMARY KEY (UserID, EventID),
+	
+	FOREIGN KEY  (UserID)
+		REFERENCES Users(userID)
+		ON DELETE CASCADE,
+		
+	FOREIGN KEY (EventID)
+		REFERENCES Event(EventID)
+		ON DELETE CASCADE
+)
