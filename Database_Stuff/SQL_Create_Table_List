@@ -4,21 +4,13 @@ CREATE TABLE Users (
 	UserID int NOT NULL,
 	Username nvarchar(63) NOT NULL,
 	Password nvarchar(255) NOT NULL,
-	UserProfilePicture nvarchar(255),
+	ProfilePic nvarchar(255),
 	Email nvarchar(127),
 	Bio varchar,
-	RSO_ID int,
+	
 	SchoolID int,
 	
-	PRIMARY KEY (UserID),
-	
-	FOREIGN KEY (RSO_ID)
-		REFERENCES RSO(RSO_ID)
-		ON DELETE CASCADE,
-	
-	FOREIGN KEY (SchoolID)
-		REFERENCES School(SchoolID)
-		ON DELETE CASCADE
+	PRIMARY KEY (UserID)
 )
 
 CREATE TABLE Admins (
@@ -56,7 +48,7 @@ CREATE TABLE Super_Admins (
 	UserID int NOT NULL,
 	SchoolID int NOT NULL,
 	
-	PRIMARY KEY (SchoolID, RSO_ID),
+	PRIMARY KEY (SchoolID, UserID),
 	
 	FOREIGN KEY (UserID)
 		REFERENCES Users(UserID)
@@ -71,7 +63,7 @@ CREATE TABLE Students(
 	UserID int NOT NULL,
 	SchoolID int NOT NULL,
 	
-	PRIMARY KEY (SchoolID, RSO_ID),
+	PRIMARY KEY (SchoolID, UserID),
 	
 	FOREIGN KEY (UserID)
 		REFERENCES Users(UserID)
@@ -101,7 +93,7 @@ CREATE TABLE Non_RSO_Event(
 		REFERENCES Super_Admins(UserID)
 		ON DELETE CASCADE
 
--- Recognised School Organizations tables located beloww
+-- Recognised School Organizations tables located below
 
 CREATE TABLE RSO (
 	RSO_ID int NOT NULL,
@@ -129,6 +121,7 @@ CREATE TABLE RSO_Pics (
 CREATE TABLE RSO_Ran_Event (
 	HostID int NOT NULL,
 	EventID int NOT NULL,
+	
 	PRIMARY KEY (HostID, EventID),
 	
 	FOREIGN KEY HostID
@@ -147,7 +140,7 @@ CREATE TABLE School (
 	SchoolDesc nvarchar,
 	NumOfStudents int NOT NULL,
 	NumOfRSOSs int NOT NULL,
-	SchoolLat real,
+	School_Lat real,
 	School_long real,
 	
 	PRIMARY KEY (SchoolID)
@@ -155,7 +148,7 @@ CREATE TABLE School (
 
 CREATE TABLE SchoolPictures (
 	PicID int NOT NULL,
-	PicDir nvarchar(255) NOT NULL,
+	Dir nvarchar(255) NOT NULL,
 	SchoolID int NOT NULL,
 	
 	PRIMARY KEY (PicID, SchoolID),
@@ -188,7 +181,7 @@ CREATE TABLE Event (
 	
 	FOREIGN KEY (Host_RSO_ID)
 		REFERENCES Users(UserID)
-		ON SET NULL -- need a check here to see
+		ON DELETE SET NULL -- need a check here to see
 )
 
 CREATE TABLE EventType(
@@ -210,12 +203,12 @@ CREATE TABLE Types(
 	TypeID int NOT NULL,
 	TypeName nvarchar(31),
 	
-	PRIMARY KEY TypeID
+	PRIMARY KEY (TypeID)
 )
 
 CREATE TABLE EventPics (
 	PicID int NOT NULL,
-	PicDir nvarchar(255) NOT NULL,
+	Dir nvarchar(255) NOT NULL,
 	EventID NOT NULL,
 	
 	PRIMARY KEY (PicID, EventID),
@@ -241,8 +234,8 @@ CREATE TABLE Commented (
 	EventID int NOT NULL,
 	Rating real NOT NULL,
 	Text nvarchar(2000),
-	timeStamps TIME,
-	dayOfPost DATE,
+	TimeStamps TIME,
+	DayOfPost DATE,
 	
 	PRIMARY KEY (UserID, EventID),
 	
