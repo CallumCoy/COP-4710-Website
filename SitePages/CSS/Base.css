@@ -1,0 +1,43 @@
+/* items that are used on all pages
+Below is just s basic command so taht I can use percentages without crying */
+html, body {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    background-color: black;
+}
+
+/* Below is all css files relating to the top bar*/
+ul.topBar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: fixed;
+    background-color: darkslategray;
+    z-index: 10;
+}
+
+ul.topBar li{
+    display: inline;
+}
+
+ul.topBar li.right a{
+    float: right;
+}
+
+ul.topBar li a{
+    display: flex;
+    align-items: center;
+    color: white;
+    float: left;
+    padding: 14px 16px;
+    text-decoration: none;
+    text-align: center;
+    margin: auto;
+}
+
+ul.topBar li a:hover{
+    background-color: lightgrey;
+    color: teal;
+}

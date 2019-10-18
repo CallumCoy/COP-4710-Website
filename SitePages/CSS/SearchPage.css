@@ -1,0 +1,125 @@
+/*This file is the search layout minus the slide out menu, which has its own .css file
+Below the design for a div to hold the events*/
+div.eventList {
+    top: 46px;
+    left: 15px;
+    margin: 0;
+    margin-bottom: -15px;
+    padding: 15px;
+    position: relative;
+    max-width: 700px;
+    min-width: 500px;
+    width: calc(100% - 421px);
+    height: auto;
+}
+
+/*the design for the items that will fill the list above*/
+div.event {
+    margin: 5px;
+    padding: 0px;
+    background-color: indigo;
+    height: 200px;
+    min-height: 200px;
+    width: 20;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/*div for holding the picture to the left
+followed by the actual design for the picture*/
+div.eventPicDiv {
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    max-width: 40%;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    position: inline;
+}
+
+img.eventPic {
+    height: 100%;
+    margin: auto;
+    padding: 0px;
+    align-content: center;
+    display: block;
+}
+
+/*div for holding the information about items*/
+div.information {
+    background-color: white;
+    position: relative;
+    left: 40%;
+    top: -218px;
+    width: 60%;
+    height: 100%;
+    padding: 0px;
+    padding-left: 15px;
+}
+
+/*This div holds the description for the event*/
+div.text {
+    padding: 5px;
+    background-color: chocolate;
+    width: calc(100% - 50px);
+    height: 100px;
+    position: relative;
+    overflow-wrap: break-word;
+}
+
+/*This div holds the information of start date and time*/
+div.startInfo {
+    background-color: grey;
+    width: calc(100% - 40px);
+    font-weight: bold;
+    font-size: 24px;
+    position: inline;
+}
+
+/*End of designin the list/ list items
+below just describes the div that holds the map*/
+div.map {
+    position: fixed;
+    right: 15px;
+    top: 64px;
+    background-color: royalblue;
+    border-radius: 5px;
+    height: calc(100% - 70px);
+    min-width: 350px;
+    width: calc(100% - 740px - 15px );
+    z-index: 10;
+}
+
+/*redefines divs according to the size of the window and a font size*/
+@media screen and (max-width: 1100px) {
+    div.map{
+        left: calc(100% - 375px);
+        right: auto;
+    }
+    div.startInfo{
+        font-size: 15px;
+    }
+    @media screen and (max-width: 910px) {
+        div.map{
+            left: 545px;
+        }
+        @media screen and (max-width: 740px) {
+            div.map{
+                visibility: hidden;
+            }
+            div.eventList{
+                max-width: 1000px;
+                width: calc(100% - 50px);
+            }
+            div.startInfo{
+                font-size: 25px;
+            }
+            @media screen and (max-width: 715px) {
+                div.startInfo{
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}

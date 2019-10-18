@@ -1,0 +1,70 @@
+/* Contains all information that is used to create the slide effect found in the search pages
+below sets up the button that pulls up the menu*/
+span {
+    position: fixed;
+    top: 15%;
+    color:black;
+    background-color: white;
+    z-index: 11;
+    border-radius: 0 20px 20px 0;
+    padding: 5px;
+    opacity: 0.3;
+    
+}
+
+span:hover{
+    opacity: 1;
+}
+
+/* Below is the properties of the actual slide out menu design*/
+.overlay {
+    height: 100%;
+    width: 0px;
+    position: fixed;
+    z-index: 11;
+    top: 46px;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 250px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+/*Honestly not sure what this is for other than something to do with the slide out menu*/
+@media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+    }
+}
