@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Events
+        </title>
+        <link href="../CSS/Base.css" rel="stylesheet">
+    </head>
+    <div>
+        <ul class="topBar">
+            <li><a href="">Home</a></li>
+            <li><a href="">Events</a></li>
+            <li><a href="">RSC</a></li>
+            <li><a href="">Schools</a></li>
+    
+            <li class="right"><a href="">LogOut</a></li>
+            <li class="right"><a href="">Profile</a></li>
+        </ul>
+    </div>
+    <body onload="PreviewImage();">
+        <div class="holder">
+            <div class="table">
+                <form action="">
+                        <div class="section"> Pic </div>
+                        <div class="inputSec"> <input type="file" name="myPhoto" id="uploadImage" onchange="PreviewImage();"></div>
+                        <div class="picPreview">
+                                <img src="..\Sources\Images\2019-10-25 15_47_10-【Electro】Monstaz. - Popcorn Funk - YouTube.png" id="uploadPreview" alt="Space" class="eventPic" >
+                        </div>    
+                        <div class="break"></div>
+                        <div class="section"> Name: </div>
+                        <div class="inputSec"><input type="text" name="Name" id="Name" class="text" ></div>
+                        <div class="break"></div>
+                        <div class="section"> Email: </div>
+                        <div class="inputSec"><input type="email" name="Email" id="Email" class="text" ></div>
+                        <div class="break"> </div>
+                        <div class="section"> Bio: </div>
+                        <div class="inputSec"><textarea name="Bio" id="Bio" class="bigTextBox" wrap="hard"></textarea></div>
+                        <div class="break"></div>
+                        <div class="section"> Note: </div>
+                        <div class="inputSec"><input type="text" name="Note" id="Note" maxlength="31" class="text"></div>
+                        <div class="break"></div>
+                        <div class="bigBreak"></div>
+                        <div class="section"> Password change </div>
+                        <div class="break"></div>
+                        <div class="section"> Password: </div>
+                        <div class="inputSec"><input type="password" name="Pas" id="Pas" class="text"></div>
+                        <div class="break"></div>
+                        <div class="section"> Password Comfirm: </div>
+                        <div class="inputSec"><input type="password" name="PasCom" id="PasCom" class="text"></div>
+                        <div class="break"></div>
+                        <input type="submit" value="update">
+                </form>
+            </div>
+        </div>
+        <script>
+            function PreviewImage() {
+                var oFReader = new FileReader();
+                oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+                oFReader.onload = function (oFREvent) {
+                    document.getElementById("uploadPreview").src = oFREvent.target.result;
+                };
+            };
+        </script>
+    </body> 
+</html>
