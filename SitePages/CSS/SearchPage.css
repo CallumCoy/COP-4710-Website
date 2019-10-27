@@ -38,13 +38,6 @@ div.eventPicDiv {
     position: inline;
 }
 
-img.eventPic {
-    height: 100%;
-    margin: auto;
-    padding: 0px;
-    align-content: center;
-    display: block;
-}
 
 /*div for holding the information about items*/
 div.information {
