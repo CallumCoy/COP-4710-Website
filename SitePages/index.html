@@ -7,6 +7,7 @@
         <link href="CSS/Base.css" rel="stylesheet">
         <link href="CSS/SlideOutMenu.css" rel="stylesheet">
         <link href="CSS/SearchPage.css" rel="stylesheet">
+        <link href="CSS/SignUp_Login.css" rel="stylesheet">
     </head>
     <body>
         
@@ -28,8 +29,9 @@
             <li><a href="Layout/ItemPage.html">RSC</a></li>
             <li><a href="">Schools</a></li>
 
-            <li class="right"><a href="Layout/loginPopUp.html">LogIn</a></li>
-            <li class="right"><a href="Layout/Profile.html">Profile</a></li>
+            
+            <li class="right"><a onclick="openSignUp();" href="#"> Sign Up </a></li>
+            <li class="right"><a onclick="openLogin();" href="#"> Login </a></li>
         </ul>
         
         
@@ -52,6 +54,46 @@
             </div>
         </div>
         
+        <!-- hiding forms below-->
+        <div id="login" class="popup">
+            <form action="">
+                <h1> Login </h1>
+    
+                <label for="email">Email<br></label>
+                <input type="email" placeholder="Enter Email" name="email" id="email" required>
+                
+                <label for="password"><br>Password</br></label>
+                <input type="password" placeholder="Enter Password" name="password" id="password" required>
+    
+                <br>
+                <button type="submit" class="btn">Login</button>
+                <button type="button" class="btn cancel" onclick="closeThem()">Close</button>
+            </form>
+        </div>
+            
+        <div id="signUp" class="popup">
+            <form action="">
+                <h1> Sign Up </h1>
+    
+                <label for="email">Email<br></label>
+                <input type="email" placeholder="Enter Email" name="email" id="email" required>
+    
+                <label for="name"><br>Name</br></label>
+                <input type="text" placeholder="Enter name" name="name" id="name" required>
+                
+                <label for="password"><br>Password</br></label>
+                <input type="password" placeholder="Enter Password" name="password" id="password" required>
+    
+                <label for="passwordCheck"><br>Password Comfirm</br></label>
+                <input type="password" placeholder="Enter Password" name="passwordCheck" id="passwordCheck" required>
+    
+                <br>
+                <button type="submit" class="btn">Sign Up</button>
+                <button type="button" class="btn cancel" onclick="closeThem();">Close</button>
+            </form>
+        </div>
+
+        <div class="greyout" id="greyscreen" onclick="closeThem(); "> </div>
 
         <script>
             function openNav() {
@@ -60,6 +102,25 @@
 
             function closeNav() {
             document.getElementById("myNav").style.width = "0%";
+            }
+
+            function openSignUp(){
+                document.getElementById("login").style.display = "none";
+                document.getElementById("signUp").style.display = "block";
+                document.getElementById("greyscreen").style.display = "block";
+            }
+
+            function openLogin(){
+                document.getElementById("signUp").style.display = "none";
+                document.getElementById("login").style.display = "block";
+                document.getElementById("greyscreen").style.display = "block";
+            }
+
+            //closes greyScreen, Login and signUp
+            function closeThem(){
+                document.getElementById("login").style.display = "none";
+                document.getElementById("signUp").style.display = "none";
+                document.getElementById("greyscreen").style.display = "none";
             }
         </script>
 
