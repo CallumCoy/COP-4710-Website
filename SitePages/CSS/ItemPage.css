@@ -1,0 +1,181 @@
+body{
+    color: white;
+    background-color: rgb(18, 18, 18);
+    padding-top: 45px;
+}
+
+div{
+    margin: 0px;
+}
+
+ul.topBar {
+    margin-top: -45px;
+}
+
+div.header{
+    background-color: rgba(42, 43, 49);
+    width: 100%;
+    height: 100px;
+    display: flex;
+    text-align: center;
+    vertical-align: center;
+}
+
+div.page {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    padding: 0px;
+}
+
+
+div.leftColumn{
+    flex: auto;
+    min-height: 100px;
+}
+
+div.rightColumn{
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    width: 190px;
+    background-color: rgba(48, 48, 60);
+    min-height: 200px;
+    padding: 5px;
+}
+
+div.commentsColumn{
+    flex: auto;
+    background-color: gray;
+    min-height: 100px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-width: 10px;
+}
+
+div.break{
+    width: 100%;
+    height: 0;
+}
+
+div.desc{
+    margin: 10px;
+    padding: 10px;
+    width: calc(100% - 40px);
+    border-radius: 10px;
+    height: auto;
+    min-height: 300px;
+    background-color: rgba(48, 48, 60, .79);
+}
+
+div.commentSection{
+    margin: 10px;
+    padding: 10px;
+    width: calc(100% - 40px);
+    height: auto;
+    min-height: 300px;
+    border-radius: 10px;
+    background-color: rgba(48, 48, 60, .79);
+}
+
+div.commentBox{
+    width: calc(100%-60px);
+    margin: 10px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: rgb(18, 18, 18, 0.87);
+}
+
+div.leftCommentBox{
+    width: 150px;
+    height: 100%;
+    padding: 5px;
+    margin: 0;
+    text-align: center;
+    font-size: 24px;
+}
+
+div.rightCommentbox{
+    margin: 10px;
+    padding: 10px;
+    background-color: rgba(48, 48, 60);
+    border-radius: 10px;
+    border: black;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: black;
+    flex: auto;
+}
+
+div.commmentPic{
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    margin: 5px;
+    overflow: hidden;
+    position: inline;
+}
+
+div.rating{
+    width: 100%;
+    text-align: center;
+}
+
+div.pic{
+    width: 190px;
+    height: 190px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: inline;
+}
+
+div.person{
+    width: calc(100% - 6px);
+    height: 50px;
+    padding: 3px;
+    margin: 3px;
+    margin-left: 0;
+    border-radius: 10px;
+    background-color: rgba(48, 48, 60, .79);
+    border: black;
+    border-width: 1px;
+    border-style: solid;
+    display: flex;
+}
+
+div.InfoTable{
+    width: 105px;
+    height: 45px;
+    margin: auto;
+    display: table;
+}
+
+div.Info{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 12px;
+}
+
+div.list{
+    width: 180px;
+    padding: 5px;
+    margin-top: 15px;
+    margin-bottom: 10px ;
+    border-radius: 10px;
+    background-color: rgb(18, 18, 18, 0.87);
+}
+
+@media screen and (max-width: 650px) {
+    div.rightColumn{
+        visibility: collapse;
+    }
+    div.leftColumn{
+        width: 100%;
+    }
+}
