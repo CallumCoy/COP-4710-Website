@@ -4,7 +4,8 @@ html, body {
     height: 100%;
     padding: 0px;
     margin: 0px;
-    background-color: black;
+    background-color: rgb(18, 18, 18);
+    color: white;
 }
 
 /* Below is all css files relating to the top bar*/
@@ -14,7 +15,7 @@ ul.topBar {
     padding: 0;
     width: 100%;
     position: fixed;
-    background-color: darkslategray;
+    background-color: rgb(18, 18, 18);
     z-index: 10;
 }
 
@@ -40,4 +41,69 @@ ul.topBar li a{
 ul.topBar li a:hover{
     background-color: lightgrey;
     color: teal;
+}
+
+
+img.eventPic {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+div.miniPic{
+    overflow: hidden;
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    min-height: 50px;
+    border-radius: 100%;
+    position: inline;
+}
+
+
+div.picPreview{
+    overflow: hidden;
+    margin: auto;
+    width: 300px;
+    height: 300px;
+    border-radius: 100%;
+}
+
+body{
+    color: white;
+    background-color: rgb(18, 18, 18);
+    padding-top: 45px;
+}
+
+ul.topBar {
+    margin-top: -45px;
+}
+
+div.holder{
+    margin: 10px;
+    padding: 10px;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+div.break{
+    height: 20px;
+    width: 100%;
+}
+
+div.bigBreak{
+    height: 60px;
+    width: 100%;
+}
+
+textarea.bigTextBox{
+    height: 300px;
+    width: 300px;
+    overflow-wrap: break-word;
+}
+
+input.text{
+    width: 300px;
 }
