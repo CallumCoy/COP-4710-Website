@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Events
+        </title>
+        <link href="../CSS/Base.css" rel="stylesheet">
+        <link href="../CSS/SignUp_Login.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="popup">
+            <form action="">
+                <h1> Login </h1>
+
+                <label for="email">Email<br></label>
+                <input type="email" placeholder="Enter Email" name="email" id="email" required>
+                
+                <label for="password"><br>Password</br></label>
+                <input type="password" placeholder="Enter Password" name="password" id="password" required>
+
+                <br>
+                <button for="submit" class="btn">Login</button>
+                <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+            </form>
+        </div>
+
+        
+        <div class="popup">
+            <form action="">
+                <h1> Sign Up </h1>
+
+                <label for="email">Email<br></label>
+                <input type="email" placeholder="Enter Email" name="email" id="email" required>
+
+                <label for="name"><br>Name</br></label>
+                <input type="text" placeholder="Enter name" name="name" id="name" required>
+                
+                <label for="password"><br>Password</br></label>
+                <input type="password" placeholder="Enter Password" name="password" id="password" required>
+
+                <label for="passwordCheck"><br>Password Comfirm</br></label>
+                <input type="password" placeholder="Enter Password" name="passwordCheck" id="passwordCheck" required>
+
+                <br>
+                <button for="submit" class="btn">Sign Up</button>
+                <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+            </form>
+        </div>
+    </body>
+</html>
