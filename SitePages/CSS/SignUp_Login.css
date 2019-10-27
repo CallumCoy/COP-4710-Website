@@ -1,14 +1,30 @@
-div.popup{
+div.greyout{
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin: auto;
+    display: none;
     align-content: center;
     text-align: center;
-    /*position: fixed;
-    display: none;*/
-    background-color: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    height: 100%;
+    z-index: 19;
+    background-color: rgba(54, 53, 53, 0.486);
+}
+
+div.popup{
+    left: calc(50% - 150px);
+    margin: auto;
+    align-content: center;
+    text-align: center;
+    position: fixed;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     border: 1px solid black;
     width: 300px;
     padding: 10px;
-    margin: 10px;
+    z-index: 20;
 }
 
 
