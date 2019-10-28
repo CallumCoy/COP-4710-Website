@@ -8,8 +8,12 @@
         <link href="CSS/SlideOutMenu.css" rel="stylesheet">
         <link href="CSS/SearchPage.css" rel="stylesheet">
         <link href="CSS/SignUp_Login.css" rel="stylesheet">
+        <script src="JavaScript/map.js"></script>
     </head>
-    <body>
+    <body onload="getLocation();">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js">
+        </script><script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIY0b4bKUEcux9O822gFjvSwREmpGgJ1s"></script>
+        <script src="JavaScript/map.js"></script>
         
         <span style="font-size:35px;cursor:pointer" onclick="openNav()"> > </span>
 
@@ -36,6 +40,7 @@
         
         
         <div class="map">
+            <div class="innerMap" id="map"></div>
         </div>
         
         
@@ -84,7 +89,7 @@
                 <label for="password"><br>Password</br></label>
                 <input type="password" placeholder="Enter Password" name="password" id="password" required>
     
-                <label for="passwordCheck"><br>Password Comfirm</br></label>
+                <label for="passwordCheck"><br>Password Confirm</br></label>
                 <input type="password" placeholder="Enter Password" name="passwordCheck" id="passwordCheck" required>
     
                 <br>

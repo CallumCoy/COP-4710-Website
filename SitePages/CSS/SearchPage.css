@@ -1,7 +1,6 @@
 /*This file is the search layout minus the slide out menu, which has its own .css file
 Below the design for a div to hold the events*/
 div.eventList {
-    top: 46px;
     left: 15px;
     margin: 0;
     margin-bottom: -15px;
@@ -79,13 +78,22 @@ below just describes the div that holds the map*/
 div.map {
     position: fixed;
     right: 15px;
-    top: 64px;
-    background-color: royalblue;
+    top: 46px;
     border-radius: 5px;
-    height: calc(100% - 70px);
+    height: calc(100% - 50px);
     min-width: 350px;
     width: calc(100% - 740px - 15px );
+    z-index: 9;
+    overflow: hidden;
+}
+
+div.innerMap{
+    width: 100%;
+    height: 100%;
     z-index: 10;
+    position: relative;
+    margin: auto;
+    padding: 0;
 }
 
 /*redefines divs according to the size of the window and a font size*/
