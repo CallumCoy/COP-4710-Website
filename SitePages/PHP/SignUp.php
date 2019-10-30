@@ -9,6 +9,8 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(empty(trim($_POST["email"]))){
             $emailErr = "Please enter a email.";
+        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format";
         } else {
             //preparing a select statement
             $sql = "SELECT UserId FROM users WHERE Email = ?";
@@ -82,7 +84,7 @@
                 $param_email = $email;
 
                 if (mysqli_stmt_excute($stmt)) {
-                    # logs in TODO code the log in
+                    header(locationt: "index.php")
                 } else{
                     echo "something went wrong. I'm sowwy ;-;";
                 }
