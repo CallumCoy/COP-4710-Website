@@ -5,6 +5,6 @@
         exit;
     }
 
-    $userID = $_SESSION["id"]
+    $userID = $_SESSION["id"];
     setcookie("UserNumber", userID, time()+3600);
 ?>
