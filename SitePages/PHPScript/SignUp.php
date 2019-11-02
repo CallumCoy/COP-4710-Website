@@ -74,12 +74,6 @@
             # prepare a insert statement
             $sql = "INSERT INTO users (Username, Pasword, Email) VALUES (?, ?, ?)";
 
-            if ($stmt){
-                echo"not even";
-            } else {
-                echo "oof";
-            }
-
             if ($stmt = mysqli_prepare($link, $sql)) {
                 # bind the statement and parameters
                 mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password, $param_email);
