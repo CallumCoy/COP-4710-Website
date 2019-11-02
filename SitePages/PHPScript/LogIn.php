@@ -32,11 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     #assure no error was recieved
-    if (empty($emailError) &&empty($passwordError)) {
+        error_log($emailError ." and " . $passwordError);
+    if (empty($emailError) && empty($passwordError)) {
         #prep the query
-        $sql = "SELECT UserID, Email, Pasword FROM users WHERE Email = ?";
+        $sql = "SELECT UserID, Email, Pasword, SchoolID FROM users WHERE Email = ?";
 
-        if ($stmt = mysqli_prepare($link, $sql)) {
+
+        if ($stmt = $link->prepare($sql)) {
+        error_log("hi");
             mysqli_stmt_bind_param($stmt, "s", $param_email);
 
             $param_email = $email;
@@ -47,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 mysqli_stmt_store_result($stmt);
                 if (mysqli_stmt_num_rows($stmt) == 1) {
                     # Bind the results with a variable
-                    mysqli_stmt_bind_result($stmt,$id, $email, $hashed_password);
+                    mysqli_stmt_bind_result($stmt,$id, $email, $hashed_password, $sid);
                     if (mysqli_stmt_fetch($stmt)) {
                         echo password_hash($password, PASSWORD_DEFAULT);
                         if (password_verify($password, $hashed_password)) {
@@ -57,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["email"] = $email;
+                            $_SESSION["sid"] = $sid;
                             
                             include "SetCookies.php";
 
@@ -71,12 +75,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
             echo "Something seems to have broken down, please cross you finger and try again";
             }
-        }
-
         mysqli_stmt_close($stmt);
+        }
     }
     echo $emailError . " " . $passwordError;
     mysqli_close($link);
 }
+    mysqli_close($link);
 
 ?>
