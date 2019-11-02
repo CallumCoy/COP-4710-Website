@@ -1,39 +1,42 @@
 <?php
+    session_start();
     $error = "";
+    
+    error_log("hi");
 
-    require_once "/../PHPScript/config.php";
-    $stmt = "SELECT RSO_Desc RSO_ProPic FROM rso WHERE RSO_ID - ?";
-
-    if(mysqli_stmt_prepare($link, $sql)){
-        mysqli_stmt_bound_param($stmt, "i", $param_RSO_ID);
-
-        $param_RSO_ID = $RSO_ID;
-        
-        if(mysqli_stmt_execute($stmt)){
-            mysqli_stmt_store_result($stmt);
-
-            if(mysqli_stmt_num_rows($stmt) == 1){
-                
-                mysqli_stmt_bind_result($stmt, $desc, $pic);
-
-            } else if (mysqli_stmt_num_rows($stmt) == 0){
-
-                $desc = "";
-                $pic = "";
-
-            } else {
-
-                $error = "honestly it should be impossible to get here";
-
-            }
-
-            mysqli_stmt_close($stmt);
-
-        }
+    if(isset($_GET["RSOs"])){
+        $rName = $orName =  $_GET["RSOs"];
+    } else {
+        header("location: /../index.php");
     }
-    mysqli_close($link);
 
-    if (error != ""){
+    include "./config.php";
+    $query = "  SELECT RSO_Desc, RSO_ProfPic, NumofMembers
+                FROM rso 
+                WHERE RSO_Name = ? && SchoolID = ?";
+
+    #Is it a new RSO or not
+    if($stmt = $link->prepare($query)){
+        $stmt->bind_param("si", $rName, $_SESSION["sid"]);
+        $stmt->execute();
+        $stmt->bind_result($desc, $pic, $num);
+        $stmt->store_result();
+        $stmt->fetch();
+
+        if($stmt->num_rows == 0){
+            header("location: /../PHPPage/editRSOPage.php?name=" . $orName . "&desc=''&pic=''&num=0");
+        } else if ($stmt->num_rows == 1) {
+            #send all the details to the page
+            header("location: /../PHPPage/editRSOPage.php?name=" . $orName . "&desc=" . $desc . "&pic=" . $pic . "&num=" . $num);
+        } else {
+            header("location: /../index");
+        }
+        $stmt->close();
+    }
+
+    $link->close();
+
+    if ($error != ""){
         header("location: ../index.php?error_message=$error");
     }
 ?>
