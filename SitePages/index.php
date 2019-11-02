@@ -1,5 +1,7 @@
 <?php
+    session_start();
     include_once __DIR__ . '/PHPScript/SetCookies.php';
+    require_once "PHPScript/config.php";
 ?>
 <html>
     <head>
