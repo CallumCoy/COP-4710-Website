@@ -1,9 +1,9 @@
 <?php
     echo '<ul class="topBar"> 
-    <li><a href="">Home</a></li>
+    <li><a href="../index.php">Home</a></li>
     <li><a href="Layout/EventMod.html">Events</a></li>
     <li><a href="Layout/ItemPage.html">RSC</a></li>
-    <li><a href="">Schools</a></li>
+    <li><a href="../PHPPage/LoadSchool.php">School</a></li>
     ';
 
     if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
