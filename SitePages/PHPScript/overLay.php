@@ -6,48 +6,56 @@
            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
            <div class="overlay-content">';
 
+        #Adds some options if the user is logged in
         if (isset($_SESSION["loggedin"]) && ($_SESSION["loggedin"] === true)) {
-            echo '<a href="/PHPPage/editRSOPage.php?name=null"></a>';
+            
+            echo '<form action="/PHPScript/getRSOInfo.php" method="get">
+                    <input list="RSOs" name="RSOs" class="RSOs">';
+                        include "listOfRSOs.php";
+            echo '  <button type="submit" class="RSOSearch"> GO </button>
+                  </form>';
 
+
+            #shows an extra option if the user is an admin of any RSOs
             require_once "config.php";
-            $sql = "SELECT 1
+            $sql = "SELECT *
                      FROM admins
                      WHERE UserID = ?";
 
             if($stmt = mysqli_prepare($link, $sql)){
-                mysqli_stmt_bind_param($stmt, $paramID);
+
+                mysqli_stmt_bind_param($stmt, "i", $paramID);
 
                 $paramID = $_SESSION["id"];
-                if (mysqli_stmt_execute($link)) {
+
+                if (mysqli_stmt_execute($stmt)) {
                     mysqli_stmt_store_result($stmt);
 
                     if (mysqli_stmt_num_rows($stmt) > 0){
-                        echo '<a href="/PHPScript/LoadMyRSOAdmin.php"></a>';
+                        echo '<a href="/PHPPage/LoadMyRSO.php?level=admins">Edit My RSOs</a>';
                     }
                 }
                 mysqli_stmt_close($stmt);
             }
 
-            $sql =" SELECT 1
+            $sql =" SELECT *
                     FROM members
                     WHERE UserID = ?";
 
-            if($stmt->prepare($link, $sql)){
-                $stmt->bind_param($_SESSION["id"]);
-                $stmt->execute();
-                $stmt->store_result();
+            if($stmt2 = $link->prepare($sql)){
+                $stmt2->bind_param("i", $_SESSION["id"]);
+                $stmt2->execute();
+                $stmt2->store_result();
 
-                if($stmt->num_rows() > 0){
-                    echo '<a href="/PHPScript/LoadMyRSO.php"></a>';
+                if($stmt2->num_rows() > 0){
+                    echo '<a href="/PHPPage/LoadMyRSO.php?level=members">View My RSOs</a>';
                 }
+                $stmt2->close();
             }
-
-            mysqli_close($link);
         }
 
-            '<a href="#">Services</a>
-            <a href="#">Clients</a>
+            echo '<a href="#">Clients</a>
             <a href="#">Contact</a>
            </div>
-        </div>'
+        </div>';
 ?>
