@@ -1,102 +1,68 @@
 <?php
 
-    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         # relocate
         header("location: /../index.php");
         exit;
     }
     
-    $error = "";
+    $error = $param_userID = "";
 
+    #are they a student
     require_once "config.php";
-    $stmt = "SELECT SchoolID FROM students WHERE UserID = ?";
+    $sql = "SELECT SchoolID FROM students WHERE UserID = ?";
 
-    if($stmt = mysqli_prepare($link, $sql)){
-        mysqli_stmt_bind_param($stmt, $param_userID);
-
-        $param_userID = _SESSION["id"];
-
-        if(mysqli_stmt_execute($stmt)){
-            mysqli_stmt_store_result($stmt);
-            
-            if (mysqli_stmt_num_rows($stmt) == 0){
-                $error = "you don't even have a school.";
-            } else if (mysqli_stmt_num_rows($stmt) > 1){
-                $error = "Something really wacky happened here please contact tech support";
-            } 
-        }
-
-        if ($error != ""){
-            header("location: ../index.php?error_message=$error");
-        }
-        mysqli_stmt_close($stmt);
-    }
-    $stmt = "SELECT SchoolID FROM students WHERE UserID = ?";
-
-    if($stmt = mysqli_prepare($link, $sql)){
-        mysqli_stmt_bind_param($stmt, "i", $param_userID);
-
-        $param_userID = _SESSION["id"];
-
-        if(mysqli_stmt_execute($stmt)){
-            mysqli_stmt_store_result($stmt);
-            
-            if (mysqli_stmt_num_rows($stmt) == 0){
-                $error = "you don't even have a school.";
-            } else if (mysqli_stmt_num_rows($stmt) > 1){
-                $error = "Something really wacky happened here please contact tech support";
-            } else {
-                mysqli_stmt_bind_result($stmt, $schoolID);
-            }
-        }
-
-        if ($error != ""){
-            header("location: ../index.php?error_message=$error");
-        }
-        mysqli_stmt_close($stmt);
+    if(!isset($_SESSION["sid"]) || $_SESSION["sid"] === NULL){
+        $error = "you don't even have a school.";
     }
 
     #now checking if the group exist and that the student is the admin of it
-    $stmt = "SELECT RSO_ID FROM rso WHERE RSO_Name = ? && SchoolID = ?";
+    $sql = "SELECT RSO_ID FROM rso WHERE RSO_ID = ? && SchoolID = ?";
 
     if($stmt = mysqli_prepare($link, $sql)){
-        mysqli_stmt_bind_param($stmt, "si", $paramRSO_Name, $param_SchoolID);
+        mysqli_stmt_bind_param($stmt, "ii", $paramRSO_ID, $param_SchoolID);
 
-        $param_SchoolID = $schoolID;
-        $paramRSO_Name = $RSOVal;
+        $param_SchoolID = $_SESSION["sid"];
+        $paramRSO_ID = $RSOVal;
 
         if(mysqli_stmt_execute($stmt)){
             mysqli_stmt_store_result($stmt);
+            error_log("num of rows " . mysqli_stmt_num_rows($stmt));
             
             if (mysqli_stmt_num_rows($stmt) == 1){
                 
                 mysqli_stmt_bind_result($stmt, $RSO_ID);
                 
                 #now checking if the student is the admin of this RSO
-                $stmt2 = "SELECT RSO_ID FROM admins WHERE RSO_ID = ? && UserID = ?";
+                $query = "SELECT RSO_ID FROM admins WHERE UserID = ? AND RSO_ID = ?";
 
-                if($stmt2 = mysqli_prepare($link, $sql)){
-                    mysqli_stmt_bind_param($stmt2, "ii", $paramRSO_ID, $param_UserID);
+                if($event = mysqli_prepare($link, $query)){
+                    $event->bind_param( "ii", $_SESSION["id"], $RSOVal);
                     
-                    $param_userID = _SESSION["id"];
-                    $paramRSO_ID = $RSO_ID;
+                    error_log($param_userID . " " . $RSOVal);
                     
-                    if(mysqli_stmt_execute($stmt2)){
-                        mysqli_stmt_store_result($stmt2);
+                    if($event->execute()){
+                        mysqli_stmt_store_result($event);
+                        error_log("file updated? Error: " . $event->error);
+                        error_log("num of rows " . $event->num_rows());
                         
-                        if (mysqli_stmt_num_rows($stmt2) != 1){
+                        if (mysqli_stmt_num_rows($event) != 1){
                             $error = "you are not the admin of this group.";
                         }
                     }
-                    mysqli_stmt_close($stmt2);
+                    mysqli_stmt_close($event);
+                } else{
+                    $error = "something happned.";
                 }
-            } 
+            } else if(mysqli_stmt_num_rows($stmt) > 1){
+                $error = "something happned.";
+            }
         }
-        mysqli_stmt_close($stmt);
+            $stmt->close();
     }
-    mysqli_close($link);
 
-    if (error != ""){
+    if ($error != ""){
+        error_log($error . "Priority failed");
         header("location: ../index.php?error_message=$error");
     }
 ?>
