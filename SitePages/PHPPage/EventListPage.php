@@ -1,7 +1,7 @@
 <?php
     session_start();
     include_once '../PHPScript/SetCookies.php';
-    require_once "config.php";
+    require_once "../PHPScript/config.php";
     $type = 'Event';
 ?>
 <html>
@@ -9,22 +9,21 @@
         <title>
             Events
         </title>
-        <link href="CSS/Base.css" rel="stylesheet">
-        <link href="CSS/SlideOutMenu.css" rel="stylesheet">
-        <link href="CSS/SearchPage.css" rel="stylesheet">
-        <link href="CSS/SignUp_Login.css" rel="stylesheet">
-        <script src="JavaScript/map.js"></script><link href="../CSS/Base.css" rel="stylesheet">
+        <link href="../CSS/Base.css" rel="stylesheet">
+        <link href="../CSS/SlideOutMenu.css" rel="stylesheet">
+        <link href="../CSS/SearchPage.css" rel="stylesheet">
+        <link href="../CSS/SignUp_Login.css" rel="stylesheet">
         <link href="../CSS/EventMod.css" rel="stylesheet">
+        <script src="../JavaScript/map.js"></script><link href="../CSS/Base.css" rel="stylesheet">
     </head>
     <div>
 
-    </head>
     <body onload="getLocation();">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js">
         </script><script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIY0b4bKUEcux9O822gFjvSwREmpGgJ1s"></script>
         <script src="JavaScript/map.js"></script>
         
-        <?php require '../PHPScript/overLay.php';?>
+        <?php require '../PHPScript/overLayForEvents.php';?>
 
         <?php require '../PHPScript/navBar.php';?>
 
@@ -34,18 +33,9 @@
         
         
         <div class="eventList col-EventList">
-            <div class="event">
-                <div class="eventPicDiv">
-                    <img src="Sources\Images\413977.jpg" alt="Space" class="eventPic">
-                </div>
-                <div class="information">
-                    <h3>Event Name</h3>
-                    <div class="text">
-                        desc:
-                    </div>
-                    <div class="startInfo"> Date: dd/mm/yy | Time: 1:50 PM</div>    
-                </div>
-            </div>
+            <?php 
+                include "../PHPScript/EventInfoMegaSearch.php";
+            ?>
         </div>
         
         <!-- hiding forms below-->
@@ -96,7 +86,7 @@
 
         <script>
             function openNav() {
-            document.getElementById("myNav").style.width = "250px";
+            document.getElementById("myNav").style.width = "280px";
             }
 
             function closeNav() {
