@@ -3,6 +3,8 @@ session_start();
 include_once '../PHPScript/IsLoggedIn.php';
 include_once '../PHPScript/SetCookies.php';
 require_once '../PHPScript/config.php';
+
+error_log("num of gets " . count($_GET));
     $name = $_GET['name'];
     $desc = $_GET['desc'];
     $pic = $_GET['pic'];
@@ -78,9 +80,9 @@ require_once '../PHPScript/config.php';
                 <div class="break"></div>
                 <div class="section"> Change Admin: </div>
                 <div class="inputSec"></div>
-                    <input list="Members" name="uid" id="uid" class="text">
+                    <select list="Members" name="uid" id="uid" class="text">
                     <datalist id="Members">
-                        <?php /** */
+                        <?php
 
                             $query = "  SELECT UserID
                                         FROM members
@@ -125,6 +127,7 @@ require_once '../PHPScript/config.php';
                             $link->close();
                         ?>    
                     </datalist>
+                    </select>
                 <div class="bigBreak"></div>
 
                 <!--<div class="section"> Location for meetings </div>
