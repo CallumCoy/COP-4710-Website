@@ -16,6 +16,8 @@
         $stmt->store_result();
         $stmt->fetch();
 
+        error_log('rID =' .$rID);
+
         $query = "SELECT Username, ProfilePic, Email
                   FROM Users
                   WHERE UserID = ?";
