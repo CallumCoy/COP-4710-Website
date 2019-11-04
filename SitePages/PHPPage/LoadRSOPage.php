@@ -1,7 +1,7 @@
 <?php
     session_start();
-    require_once "../PHPScript/config.php";
     include_once '../PHPScript/SetCookies.php';
+    require_once "../PHPScript/config.php";
 
     if(ISSET($_GET['RSO'])){
         $rID = $_GET['RSO'];
@@ -69,7 +69,7 @@
                 <div class="list">
                     MEMBERS
                         <?php 
-                        $type='members';
+                        $people='members';
                         include "../PHPScript/GetPeople.php";
                         ?>
                 </div>
