@@ -59,20 +59,20 @@
                 <?php echo $sNumRSO; ?>
                 <br>
                 <div class="list">
-                    ADMIN
+                    SUPER ADMIN
                     <div class="person">
                         
                         <?php 
                         $aName = $aPic = $aEmail = "";
-                        $admin = 'admins';
+                        $admin = 'super_admins';
                         include "../PHPScript/getAdmin.php";
                         ?>
                     </div>
                 </div>
                 <div class="list">
-                    MEMBERS
+                    STUDENTS
                         <?php 
-                        $type='members';
+                        $type='students';
                         include "../PHPScript/GetPeople.php";
                         ?>
                 </div>
