@@ -1,45 +1,22 @@
 <?php
 session_start();
+require_once '../PHPScript/config.php';
 include_once '../PHPScript/IsLoggedIn.php';
 include_once '../PHPScript/SetCookies.php';
-require_once '../PHPScript/config.php';
-    $name = $_GET['name'];
-    $desc = $_GET['desc'];
-    $pic = $_GET['pic'];
-    $num = $_GET['num'];
 
+include_once '../PHPScript/GetEventFromID.php';
 
-
-    if ($num != 0){
-
-        $query = "  SELECT RSO_ID
-                    FROM rso
-                    WHERE (RSO_Name = ?) && SchoolID = ?";
-
-        if ($stmt = $link->prepare($query)){
-            $stmt->bind_param("si", $name, $_SESSION["sid"]);
-            $stmt->execute();
-            $stmt->bind_result($id);
-            $stmt->store_result();
-            $stmt->fetch();
-            $stmt->close();
-
-            error_log($id);
-            $RSOVal = $id;
-            include_once '../PHPScript/checkPrios.php';
-            
-        } 
-    }
-
-    if ($num < 5){
-        #notify user
+    if(!isset($_GET['Event'])){
+        header("location: ../index.php");
+    } else {
+        $eid = $_GET['Event'];
     }
 
 ?>
 <html>
     <head>
         <title>
-            <?php echo $name; ?>
+            <?php echo $eName; ?>
         </title>
         <link href="../CSS/Base.css" rel="stylesheet">
         <link href="../CSS/EventMod.css" rel="stylesheet">
@@ -53,18 +30,18 @@ require_once '../PHPScript/config.php';
             <form action="/../PHPScript/UpdateRSO.php" type="post">
 
                 <div class="section"> Pic </div>
-                <div class="inputSec"> <input type="file" name="myPhoto" id="uploadImage" onchange="PreviewImage();" value="<?php echo $pic; ?>"></div>
+                <div class="inputSec"> <input type="file" name="myPhoto" id="uploadImage" onchange="PreviewImage();" value="<?php echo $ePic; ?>"></div>
                 <div class="picPreview">
-                        <img src="../sources/<?php echo $pic; ?>" id="uploadPreview" alt="Space" class="eventPic" >
+                        <img src="../sources/<?php echo $ePic; ?>" id="uploadPreview" alt="Space" class="eventPic" >
                 </div>    
                 <div class="break"></div>
 
                 <div class="section"> Name: </div>
-                <div class="inputSec"><input type="text" name="Name" id="Name" class="text" value="<?php echo $name; ?>" required></div>
+                <div class="inputSec"><input type="text" name="Name" id="Name" class="text" value="<?php echo $eName; ?>" required></div>
                 <div class="break"> </div><!-- -->
 
                 <div class="section"> Desc: </div>
-                <div class="inputSec"><textarea name="Desc" id="Desc" class="bigTextBox" wrap="hard" value=""><?php echo $desc; ?></textarea></div>
+                <div class="inputSec"><textarea name="Desc" id="Desc" class="bigTextBox" wrap="hard" value=""><?php echo $eDesc; ?></textarea></div>
                 <div class="break"></div>
 
                 <!--<div class="section"> Show Members </div>
@@ -75,57 +52,148 @@ require_once '../PHPScript/config.php';
                     will say if the school has accepted them 
                 </div> -->
                 
-                <div class="break"></div>
-                <div class="section"> Change Admin: </div>
-                <div class="inputSec"></div>
-                    <input list="Members" name="uid" id="uid" class="text">
-                    <datalist id="Members">
-                        <?php /** */
+                <?php
+                    if($eHostRSO != NULL){
 
-                            $query = "  SELECT UserID
-                                        FROM members
-                                        WHERE RSO_ID = ?";
+                        $query =   'SELECT 1
+                                    FROM admins
+                                    WHERE RSO_ID = ? && UserID = ?';
 
-                            if($stmt = $link->prepare($query)){
-                                $stmt->bind_param('i', $id);
-                                $stmt->execute();
-                                $stmt->bind_result($users);
-                                $stmt->store_result();
-                                
-                                error_log($stmt->num_rows());
-                                error_log($stmt->error);
+                        if($stmt = $link->prepare($query)){
+                            $stmt->bind_param('ii', $eHostRSO, $_SESSION['id']);
+                            $stmt->execute();
+                            $stmt->store_result();
+                            
+                            if($stmt->num_rows() > 0){
+                                echo   '<div class="break"></div>
+                                        <div class="section"> Change Hosting User: 
+                                        </div><div class="inputSec"></div><br>
+                                        <select list="Members" name="uid" id="uid" class="text">
+                                        <datalist id="Members">';
+                                            
+                                        $query = "  SELECT UserID
+                                                    FROM members
+                                                    WHERE RSO_ID = ?";
 
-                                while($stmt->fetch()){
-                                    $query = "  SELECT Email
-                                                FROM users
-                                                WHERE UserID = ?";
-                                    
-                                    if($stmt2 = $link->prepare($query)){
+                                        if($stmt1 = $link->prepare($query)){
+                                            $stmt1->bind_param('i', $eHostRSO);
+                                            $stmt1->execute();
+                                            $stmt1->bind_result($users);
+                                            $stmt1->store_result();
+                                            
+                                            error_log($stmt1->num_rows());
+                                            error_log($stmt1->error);
 
-                                        $stmt2->bind_param('i', $users);
-                                        $stmt2->execute();
-                                        $stmt2->bind_result($email);
-                                        $stmt2->store_result();
-                                        $stmt2->fetch();
+                                            while($stmt1->fetch()){
+                                                $query = "  SELECT Email
+                                                            FROM users
+                                                            WHERE UserID = ?";
+                                                
+                                                if($stmt2 = $link->prepare($query)){
 
-                                        
-                                        error_log("EMAIL " . $email);
-                                        error_log($stmt2->error);
-                                        
-                                        if ($_SESSION["id"] != $uid){
-                                            echo '<option value="' . $users . '"> ' . $email . ' </option>';
-                                        } else {
-                                            echo '<option value="' . $users . '" seleceted> ' . $email . ' </option>';
+                                                    $stmt2->bind_param('i', $users);
+                                                    $stmt2->execute();
+                                                    $stmt2->bind_result($email);
+                                                    $stmt2->store_result();
+                                                    $stmt2->fetch();
+
+                                                    
+                                                    error_log("EMAIL " . $email);
+                                                    error_log($stmt2->error);
+                                                    
+                                                    if ($_SESSION["id"] != $users){
+                                                        echo '<option value="' . $users . '"> ' . $email . ' </option>';
+                                                    } else {
+                                                        echo '<option value="' . $users . '" seleceted> ' . $email . ' </option>';
+                                                    }
+                                                $stmt2->close();
+                                                }
+                                            }
+                                        $stmt1->close();
                                         }
-                                       $stmt2->close();
-                                    }
-                                }
-                              $stmt->close();
+                            echo   '</datalist>
+                            </select>
+                            <div class="bigBreak"></div>';
                             }
-                            $link->close();
-                        ?>    
-                    </datalist>
-                <div class="bigBreak"></div>
+                            $stmt->close();
+                        }
+                    }
+                    $query =   'SELECT 1
+                                FROM events
+                                WHERE EventID = ? && Host_RSO_ID = ?';
+
+                    if($stmt = $link->prepare($query)){
+                        $stmt->bind_param("ii", $eid, $eHostRSO);
+                        $stmt->execute();
+                        $stmt->store_result();
+
+                        if($stmt->num_rows() == 1){                                 
+
+                            $query =   'SELECT 1
+                                        FROM admins
+                                        WHERE RSO_ID = ? && UserID = ?';
+
+                            if($stmt3 = $link->prepare($query)){
+                                $stmt3->bind_param('ii', $eHostRSO, $_SESSION['id']);
+                                $stmt3->execute();
+                                $stmt3->store_result();
+                                
+                                if($stmt3->num_rows() > 0){
+                                    echo   '<div class="break"></div>
+                                            <div class="section"> Change Hosting RSO: </div>
+                                            <div class="inputSec"></div><br>
+                                            <select list="RSOs" name="rid" id="rid" class="text">
+                                            <datalist id="RSOs">';
+                                                
+                                            $query = "  SELECT RSO_ID
+                                                        FROM admins
+                                                        WHERE UserID = ?";
+
+                                            if($stmt1 = $link->prepare($query)){
+                                                $stmt1->bind_param('i', $_SESSION['id']);
+                                                $stmt1->execute();
+                                                $stmt1->bind_result($rsoOption);
+                                                $stmt1->store_result();
+                                                
+                                                error_log($stmt1->error);
+
+                                                while($stmt1->fetch()){
+                                                error_log('$rsoOption = ' . $rsoOption);
+                                                    $query = "  SELECT RSO_Name
+                                                                FROM rso
+                                                                WHERE RSO_ID = ?";
+                                                    
+                                                    if($stmt2 = $link->prepare($query)){
+
+                                                        $stmt2->bind_param('i', $rsoOption);
+                                                        $stmt2->execute();
+                                                        $stmt2->bind_result($rsoNameOp);
+                                                        $stmt2->store_result();
+                                                        $stmt2->fetch();
+
+                                                        
+                                                        error_log("EMAIL " . $email);
+                                                        error_log($stmt2->error);
+                                                        
+                                                        if ($eHostRSO != $rsoNameOp){
+                                                            echo '<option value="' . $rsoOption . '"> ' . $rsoNameOp . ' </option>';
+                                                        } else {
+                                                            echo '<option value="' . $rsoOption . '" seleceted> ' . $rsoNameOp . ' </option>';
+                                                        }
+                                                    $stmt2->close();
+                                                    }
+                                                }
+                                                $stmt1->close();
+                                            }
+                                    echo   '</datalist>
+                                            </select>
+                                            <div class="bigBreak"></div>';
+                                }
+                            }
+                        }
+                    }
+                    
+                ?>
 
                 <div class="section"> Location for meetings </div>
                 <div class="break"></div>
