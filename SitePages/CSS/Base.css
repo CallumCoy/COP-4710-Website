@@ -140,4 +140,10 @@ textarea.bigTextBox{
 
 input.text{
     width: 300px;
+    text-align: center;
+}
+
+select.text{
+    width: 300px;
+    text-align: center;
 }
