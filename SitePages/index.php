@@ -95,7 +95,7 @@
 
         <script>
             function openNav() {
-            document.getElementById("myNav").style.width = "250px";
+            document.getElementById("myNav").style.width = "280px";
             }
 
             function closeNav() {
