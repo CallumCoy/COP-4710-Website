@@ -1,7 +1,7 @@
 <?php
     session_start();
     include_once '../PHPScript/SetCookies.php';
-    require_once "config.php";
+    require_once "../PHPScript/config.php";
     $type = 'RSO';
 
     if (isset($_GET["level"])){
@@ -11,6 +11,9 @@
         } else {
             $command = 'href="../PHPPage/LoadRSOPage.php?RSO=';
         }
+    } else {
+        $command = 'href="../PHPPage/LoadRSOPage.php?RSO=';
+        $level = 'members';
     }
 
     $error = "";
@@ -19,7 +22,7 @@
 <html>
     <head>
         <title>
-            Events
+            RSOs
         </title>
         <link href="../CSS/Base.css" rel="stylesheet">
         <link href="../CSS/SlideOutMenu.css" rel="stylesheet">
@@ -164,7 +167,7 @@
 
         <script>
             function openNav() {
-            document.getElementById("myNav").style.width = "250px";
+            document.getElementById("myNav").style.width = "280px";
             }
 
             function closeNav() {
