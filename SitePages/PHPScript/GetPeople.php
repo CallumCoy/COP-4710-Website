@@ -1,8 +1,6 @@
 <?php
     if(isset($_GET["type"])){
         $people = $_GET["type"];
-    } else {
-        $people = "members";
     }
 
     $query = "SELECT USERID
