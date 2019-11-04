@@ -1,8 +1,8 @@
 <?php
     echo '<ul class="topBar"> 
     <li><a href="../index.php">Home</a></li>
-    <li><a href="Layout/EventMod.html">Events</a></li>
-    <li><a href="Layout/ItemPage.html">RSC</a></li>
+    <li><a href="../PHPPage/EventListPage.php">Events</a></li>
+    <li><a href="../PHPPage/LoadMyRSO.php">RSC</a></li>
     <li><a href="../PHPPage/LoadSchool.php">School</a></li>
     ';
 
