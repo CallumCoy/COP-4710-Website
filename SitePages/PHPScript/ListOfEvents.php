@@ -39,7 +39,7 @@
             
             if($stmt2 = $link->prepare($query)){
 
-                $stmt2->bind_param("i", $_SESSION["sid"]);
+                $stmt2->bind_param("ii",$Event, $_SESSION["sid"]);
                 $stmt2->execute();
                 $stmt2->store_result();
                 
