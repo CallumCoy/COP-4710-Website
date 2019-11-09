@@ -5,9 +5,15 @@
 
     $aName = $aPic = $aEmail = "";
 
-    $query = "SELECT USERID
+    if ($admin == 'super_admins'){
+        $search = 'SchoolID';
+    } else {
+        $search = 'RSO_ID';
+    }
+
+    $query = "SELECT UserID
               FROM " . $admin . "
-              WHERE RSO_ID = ?";
+              WHERE " . $search . " = ?";
 
     if($stmt = $link->prepare($query)){
         $stmt->bind_param("i", $rID);
@@ -16,7 +22,6 @@
         $stmt->store_result();
         $stmt->fetch();
 
-        error_log('rID =' .$rID);
 
         $query = "SELECT Username, ProfilePic, Email
                   FROM Users
@@ -28,6 +33,9 @@
             $stmt2->bind_result($aName, $aPic, $aEmail);
             $stmt2->store_result();
             $stmt2->fetch();
+            
+            error_log('stmt2 = ' . $stmt->error);
+            error_log('rID = ' .$aID);
             
             echo ('
             <div class="miniPic">
