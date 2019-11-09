@@ -147,3 +147,13 @@ select.text{
     width: 300px;
     text-align: center;
 }
+
+input.overLap{
+    width: 250px;
+    text-align: center;
+}
+
+select.overLap{
+    width: 250px;
+    text-align: center;
+}
