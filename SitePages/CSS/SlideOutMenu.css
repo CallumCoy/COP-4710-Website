@@ -18,9 +18,12 @@ span:hover{
 
 /* Below is the properties of the actual slide out menu design*/
 .overlay {
+    font-size: 25px;
     text-align: center;
     align-content: center;
     align-items: center;
+    padding: auto;
+    margin: auto;
     height: 100%;
     width: 0px;
     position: fixed;
@@ -35,23 +38,26 @@ span:hover{
 
 .overlay-content {
     position: relative;
-    top: 25%;
-    width: 280px;
     text-align: center;
     align-content: center;
     align-items: center;
+    top: 100px;
+    width: 270px;
+    padding: auto;
+    margin: auto;
     margin-top: 30px;
 }
 
 .overlay a {
-    padding: 8px;
-    text-decoration: none;
-    font-size: 36px;
-    color: #818181;
-    display: flex;
     text-align: center;
     align-content: center;
     align-items: center;
+    padding: 8px;
+    margin: auto;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: flex;
     transition: 0.3s;
 }
 
@@ -61,8 +67,8 @@ span:hover{
 
 .overlay .closebtn {
     position: absolute;
-    top: 20px;
-    right: 45px;
+    top: 5px;
+    right: 20px;
     font-size: 60px;
 }
 
