@@ -3,6 +3,16 @@
     require_once "../PHPScript/config.php";
     include_once '../PHPScript/SetCookies.php';
 
+    include '../PHPScript/AreTheyAdmin.php';
+
+    if(!isset($_SESSION['sid']) && !isset($_GET['sid'])){
+        header('location: ../index.php');                
+    } elseif(!isset($_GET['sid'])){
+        $sid = $rID = $_SESSION['sid'];
+    } else {
+        $sid = $rID = $_GET['sid'];
+    }
+
     $query = "SELECT SchoolName, SchoolPic, SchoolDesc, NumOfStudents, NumOfRSOs
               FROM school
               WHERE SchoolID = ?";
@@ -10,7 +20,7 @@
     $sName = $sPic = $sDesc = $sNumStu = $sNumRSO = "";
 
     if($stmt = $link->prepare($query)){
-        $stmt->bind_param("i", $_SESSION['sid']);
+        $stmt->bind_param("i", $sid);
         $stmt->execute();
         $stmt->bind_result($sName, $sPic, $sDesc, $sNumStu, $sNumRSO);
         $stmt->store_result();
@@ -53,7 +63,7 @@
                 Num of Students:
                 <br>
                 <?php echo $sNumStu; ?>
-                <br>
+                <br> 
                 Num of RSOs:
                 <br>
                 <?php echo $sNumRSO; ?>
@@ -72,7 +82,8 @@
                 <div class="list">
                     STUDENTS
                         <?php 
-                        $type='students';
+                        $type = $people='students';
+                        $rID = $sid;
                         include "../PHPScript/GetPeople.php";
                         ?>
                 </div>
