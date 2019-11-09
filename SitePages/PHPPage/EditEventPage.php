@@ -27,8 +27,9 @@ include_once '../PHPScript/GetEventFromID.php';
 
         <body onload="PreviewImage();">
         <div class="holder">
-            <form action="/../PHPScript/UpdateRSO.php" type="post">
+            <form action="/../PHPScript/UpdateEvent.php?eid=<?php echo $eid; ?>" type="post">
 
+                
                 <div class="section"> Pic </div>
                 <div class="inputSec"> <input type="file" name="myPhoto" id="uploadImage" onchange="PreviewImage();" value="<?php echo $ePic; ?>"></div>
                 <div class="picPreview">
@@ -55,16 +56,32 @@ include_once '../PHPScript/GetEventFromID.php';
                 <?php
                     if($eHostRSO != NULL){
 
+                        $admin = 0;
+                        $query =   'SELECT 1
+                        FROM events
+                        WHERE EventID = ? && Host_RSO_ID = ?';
+
+                        if($stmt = $link->prepare($query)){
+                            $stmt->bind_param("ii", $eid, $eHostRSO);
+                            $stmt->execute();
+                            $stmt->store_result();
+                            $admin = $stmt->num_rows();
+                            $stmt->close();
+                        }
+
+
                         $query =   'SELECT 1
                                     FROM admins
                                     WHERE RSO_ID = ? && UserID = ?';
 
-                        if($stmt = $link->prepare($query)){
-                            $stmt->bind_param('ii', $eHostRSO, $_SESSION['id']);
-                            $stmt->execute();
-                            $stmt->store_result();
-                            
-                            if($stmt->num_rows() > 0){
+                        if($stmt = $link->prepare($query) || $admin > 0){
+                            if ($admin < 1){
+                                $stmt->bind_param('ii', $eHostRSO, $_SESSION['id']);
+                                $stmt->execute();
+                                $stmt->store_result();
+                            }
+
+                            if($admin > 0 ||$stmt->num_rows() > 0 ){
                                 echo   '<div class="break"></div>
                                         <div class="section"> Change Hosting User: 
                                         </div><div class="inputSec"></div><br>
@@ -115,9 +132,10 @@ include_once '../PHPScript/GetEventFromID.php';
                             </select>
                             <div class="bigBreak"></div>';
                             }
-                            $stmt->close();
                         }
                     }
+
+
                     $query =   'SELECT 1
                                 FROM events
                                 WHERE EventID = ? && Host_RSO_ID = ?';
@@ -129,16 +147,6 @@ include_once '../PHPScript/GetEventFromID.php';
 
                         if($stmt->num_rows() == 1){                                 
 
-                            $query =   'SELECT 1
-                                        FROM admins
-                                        WHERE RSO_ID = ? && UserID = ?';
-
-                            if($stmt3 = $link->prepare($query)){
-                                $stmt3->bind_param('ii', $eHostRSO, $_SESSION['id']);
-                                $stmt3->execute();
-                                $stmt3->store_result();
-                                
-                                if($stmt3->num_rows() > 0){
                                     echo   '<div class="break"></div>
                                             <div class="section"> Change Hosting RSO: </div>
                                             <div class="inputSec"></div><br>
@@ -158,7 +166,7 @@ include_once '../PHPScript/GetEventFromID.php';
                                                 error_log($stmt1->error);
 
                                                 while($stmt1->fetch()){
-                                                error_log('$rsoOption = ' . $rsoOption);
+
                                                     $query = "  SELECT RSO_Name
                                                                 FROM rso
                                                                 WHERE RSO_ID = ?";
@@ -188,8 +196,6 @@ include_once '../PHPScript/GetEventFromID.php';
                                     echo   '</datalist>
                                             </select>
                                             <div class="bigBreak"></div>';
-                                }
-                            }
                         }
                     }
                     
@@ -210,7 +216,8 @@ include_once '../PHPScript/GetEventFromID.php';
                 <div class="inputSec"><input type="number" name="Floor" id="Floor" class="text"></div>
                 <div class="section"> Room: </div>
                 <div class="inputSec"><input type="text" name="Room" id="Room" class="text"></div>
-                
+                <div class="inputSec"><input type="hidden" name="eid" id="eid" class="text" value="<?php echo ($eid);?>"</div>
+                <br>
                 <input type="submit" value="create"> 
             </form>
         </div>
