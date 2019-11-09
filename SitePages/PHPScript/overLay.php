@@ -9,11 +9,6 @@
         #Adds some options if the user is logged in
         if (isset($_SESSION["loggedin"]) && ($_SESSION["loggedin"] === true)) {
             
-            echo '<form action="/PHPScript/getRSOInfo.php" method="get">
-                    <input list="RSOs" name="RSOs" class="RSOs">';
-                        include "listOfRSOs.php";
-            echo '  <button type="submit" class="RSOSearch"> GO </button>
-                  </form>';
 
 
             #shows an extra option if the user is an admin of any RSOs
@@ -48,14 +43,34 @@
                 $stmt2->store_result();
 
                 if($stmt2->num_rows() > 0){
-                    echo '<a href="/PHPPage/LoadMyRSO.php?level=members">View My RSOs</a>';
+                    echo '<a href="/PHPPage/LoadMyRSO.php?level=members"> View My RSOs </a>';
                 }
                 $stmt2->close();
             }
+
+            $sql =" SELECT *
+                    FROM students
+                    WHERE UserID = ?";
+
+            if($stmt2 = $link->prepare($sql)){
+                $stmt2->bind_param("i", $_SESSION["id"]);
+                $stmt2->execute();
+                $stmt2->store_result();
+
+                if($stmt2->num_rows() > 0){
+                    echo '<a href="/PHPPage/RSOListPage.php?School=' . $_SESSION['sid'] . '"> View RSOs From My School </a>';
+                }
+                $stmt2->close();
+            }
+
+            echo '<form action="/PHPPage/RSOListPage.php" method="get">
+                    <br> Search By Event Name
+                    <input list="RSOs" name="Name" class="RSOs">';
+                        include "listOfRSOs.php";
+            echo '  <button type="submit" class="RSOSearch"> Search </button>
+                  </form>';
         }
 
-            echo '<a href="#">Clients</a>
-            <a href="#">Contact</a>
-           </div>
+            echo '</div>
         </div>';
 ?>
