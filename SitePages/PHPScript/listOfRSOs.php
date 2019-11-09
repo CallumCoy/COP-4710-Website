@@ -7,7 +7,8 @@
     require_once "config.php";
     $query = '  SELECT RSO_Name
                 FROM rso
-                WHERE SchoolID = ?';
+                WHERE SchoolID = ?
+                ORDER BY RSO_Name';
 
     if($stmt2 = $link->prepare($query)){
 
