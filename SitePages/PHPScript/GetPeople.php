@@ -3,9 +3,15 @@
         $people = $_GET["type"];
     }
 
+    if ($admin == 'students'){
+        $search = 'SchoolID';
+    } else {
+        $search = 'RSO_ID';
+    }
+
     $query = "SELECT USERID
               FROM " . $people . "
-              WHERE RSO_ID = ?";
+              WHERE " . $search . " = ?";
 
     if($stmt = $link->prepare($query)){
         $stmt->bind_param("i", $rID);
