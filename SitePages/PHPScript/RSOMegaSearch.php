@@ -50,7 +50,24 @@
                             <div class="information">
                                 <h3>' . $orName .'</h3>
                                 <div class="text">
-                                    desc: ' . $desc .'
+                                    <pre>
+                                        ' . $desc .'
+                                    </pre>
+                                </div>  
+                                <div class="startInfo"></div>    
+                            </div>
+                        </div> </a>';
+            } else{
+                echo   '<a href="../PHPPage/LoadRSOPage.php?RSO=' . $rid . '"> <div class="event" >
+                            <div class="eventPicDiv">
+                                <img src="' . $pic . '" alt="Space" class="eventPic">
+                            </div>
+                            <div class="information">
+                                <h3>' . $orName .'</h3>
+                                <div class="text">
+                                    <pre>
+                                        ' . $desc .'
+                                    </pre>
                                 </div>  
                                 <div class="startInfo"></div>    
                             </div>
