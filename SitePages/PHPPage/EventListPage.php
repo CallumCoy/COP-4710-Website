@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once '../PHPScript/SetCookies.php';
     require_once "../PHPScript/config.php";
+    include_once '../PHPScript/SetCookies.php';
     $type = 'Event';
 ?>
 <html>
@@ -34,7 +34,11 @@
         
         <div class="eventList col-EventList">
             <?php 
-                include "../PHPScript/EventInfoMegaSearch.php";
+                if (isset($_GET['admin'])){
+                    include "../PHPScript/Approve.php";
+                } else {
+                    include "../PHPScript/EventInfoMegaSearch.php";
+                }
             ?>
         </div>
         
