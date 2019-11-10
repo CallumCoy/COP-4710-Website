@@ -8,7 +8,13 @@
 
         #Adds some options if the user is logged in
         if (isset($_SESSION["loggedin"]) && ($_SESSION["loggedin"] === true)) {
-            $sql = "SELECT *
+            include "AreTheyAdmin.php";
+            
+            if($admin > 0){
+                echo '<a href="/PHPPage/EventListPage.php?admin=' . $admin . '&view=0">Edit My Events</a>';
+            }
+
+            $sql = "SELECT 1
                      FROM events
                      WHERE HostingUserID = ?";
 
@@ -26,14 +32,12 @@
                     }
                 }
                 mysqli_stmt_close($stmt);
-            }
-
-            if($_SESSION != NULL){
+                
                 echo '<a href="/PHPPage/EventListPage.php?UHost=' . $_SESSION['id'] . '&view=1">View My Events</a>';
+                echo '<a href="/PHPPage/NewEvent.php">Make a Events</a>';
             }
 
-            echo '<a href="/PHPPage/NewEvent.php">Make a Events</a>
-                    <br> 
+            echo '<br> 
                     <br> Search By Event Name
                     <form action="EventListPage.php" method="get">
                     <input list="Events" name="Name" class="Name overLap">';
