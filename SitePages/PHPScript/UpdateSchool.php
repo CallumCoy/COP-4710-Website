@@ -58,6 +58,8 @@
             $make->execute();
             $make->close();
         }
+
+        include "../PHPScript/NewSchool.php";
     }
     error_log("file updated? Error: " . $link->error);
     $link->close();
