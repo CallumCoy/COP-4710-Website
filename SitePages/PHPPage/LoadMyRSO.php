@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once '../PHPScript/SetCookies.php';
     require_once "../PHPScript/config.php";
+    include_once '../PHPScript/SetCookies.php';
     $type = 'RSO';
 
     if (isset($_GET["level"])){
@@ -90,7 +90,9 @@
                                     <div class="information">
                                         <h3>' . $name .'</h3>
                                         <div class="text">
-                                            desc: ' . $desc .'
+                                            <pre>
+                                                ' . $desc .'
+                                            <pre>
                                         </div>  
                                     </div>
                                 </div> </a>';
@@ -103,7 +105,9 @@
                                     <div class="information">
                                         <h3>' . $name .'</h3>
                                         <div class="text">
-                                            desc: ' . $desc .'
+                                            <pre>
+                                                ' . $desc .'
+                                            <pre>
                                         </div>  
                                     </div>
                                 </div> </a>';
