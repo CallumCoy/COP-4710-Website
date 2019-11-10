@@ -52,9 +52,11 @@
         </div>
         <div class="page">
             <div class="leftColumn">
-                <div class="desc">
-                    <?php echo $sDesc; ?>
-                </div>
+                <pre>
+                    <div class="desc">
+                        <?php echo $sDesc; ?>
+                    </div>
+                </pre>
             </div>
             <div class="rightColumn">
                 <div class="pic">
