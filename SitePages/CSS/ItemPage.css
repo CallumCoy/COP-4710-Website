@@ -30,10 +30,10 @@ div.page {
     padding: 0px;
 }
 
-
 div.leftColumn{
     flex: auto;
     min-height: 100px;
+    max-width: calc(100% - 200px);
 }
 
 div.rightColumn{
@@ -53,6 +53,7 @@ div.commentsColumn{
     padding-top: 5px;
     padding-bottom: 5px;
     border-width: 10px;
+    max-width: calc(100% - 210px);
 }
 
 div.break{
@@ -68,12 +69,14 @@ div.desc{
     height: auto;
     min-height: 300px;
     background-color: rgba(48, 48, 60, .79);
+    overflow-wrap: break-word;
 }
 
 div.commentSection{
     margin: 10px;
     padding: 10px;
     width: calc(100% - 40px);
+    max-width: calc(100% - 40px);
     height: auto;
     min-height: 300px;
     border-radius: 10px;
@@ -82,6 +85,7 @@ div.commentSection{
 
 div.commentBox{
     width: calc(100%-60px);
+    max-width: calc(100%-60px);
     margin: 10px;
     height: auto;
     display: flex;
@@ -156,6 +160,7 @@ div.InfoTable{
 }
 
 div.Info{
+    width: calc(100% - 210px);
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -169,6 +174,63 @@ div.list{
     margin-bottom: 10px ;
     border-radius: 10px;
     background-color: rgb(18, 18, 18, 0.87);
+}
+
+input.signUp{
+    position: relative;
+    left: calc(100% - 80px);
+    top: calc(100% - 40px);
+    background-color: rgb(255, 255, 255, 0.3);
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: auto;
+    width: 60px;
+    height: 30px;
+    transition: all .4s ease;
+}
+
+input.signUp:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: all .4s ease;
+}
+
+div.commentPopUp{
+    left: calc(50% - 300px);
+    width: 600px;
+    min-height: 300px;
+    margin: auto;
+    align-content: center;
+    text-align: center;
+    position: fixed;
+    background-color: rgba(78, 78, 78, 0.78);
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    z-index: 20;
+    transition: all .4s ease;
+}
+
+button.btn{
+    background-color: rgb(255, 255, 255, 0.3);
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 75px;
+    height: 25px;
+    transition: all .4s ease;
+}
+button.btn:hover{
+    background-color: white;
+    transition: all .4s ease;
+}
+
+button.delete{
+    background-color: rgb(255, 0, 0, 0.3);
+}
+
+button.delete:hover{
+    background-color: red;
+    transition: all .4s ease;
 }
 
 @media screen and (max-width: 650px) {
