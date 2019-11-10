@@ -26,7 +26,9 @@ if  ($stmt = $link->prepare($query)){
                         <div class="information">
                             <h3>' . $eName .'</h3>
                             <div class="text">
-                                desc: ' . $eDesc .'
+                                <pre>'
+                                    . $eDesc .
+                                '</pre>
                             </div>  
                             <div class="startInfo"> Date: ' . $eStart . '</div>    
                         </div>
@@ -52,7 +54,9 @@ if  ($stmt = $link->prepare($query)){
                                 <div class="information">
                                     <h3>' . $eName .'</h3>
                                     <div class="text">
-                                        desc: ' . $eDesc .'
+                                        <pre>
+                                            ' . $eDesc .'
+                                        </pre>
                                     </div>  
                                     <div class="startInfo"> Date: ' . $eStart . '</div>    
                                 </div>
