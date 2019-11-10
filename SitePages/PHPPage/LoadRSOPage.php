@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once '../PHPScript/SetCookies.php';
     require_once "../PHPScript/config.php";
+    include_once '../PHPScript/SetCookies.php';
 
     if(ISSET($_GET['RSO'])){
         $rID = $_GET['RSO'];
@@ -30,9 +30,51 @@
         </div>
         <div class="page">
             <div class="leftColumn">
-                <div class="desc">
-                    <?php echo $desc; ?>
-                </div>
+                <pre>
+                    <div class="desc">
+                        <?php 
+                            
+                            echo "<div> " . $desc . " </div>";
+                                                        
+                            $query =   'SELECT 1
+                                        FROM admins
+                                        WHERE RSO_ID = ? && UserID = ?';
+
+                            if($stmt2 = $link->prepare($query)){
+                                $stmt2->bind_param('ii', $rID, $_SESSION['id']);
+                                $stmt2->execute();
+                                $stmt2->store_result();
+                                
+                                if($stmt2->num_rows() == 0){
+                                    if($_SESSION['sid'] == $sid){
+                                        $query =   'SELECT 1
+                                                    FROM members
+                                                    WHERE UserID = ? && RSO_ID = ?';
+
+                                        
+                                        if($stmt = $link->prepare($query)){
+                                            $stmt->bind_param('ii', $_SESSION['id'], $rID);
+                                            $stmt->execute();
+                                            $stmt->store_result();
+
+                                            if($stmt->num_rows() == 0){
+                                                echo '<form action="../PHPScript/BecomeMember.php">
+                                                        <div><input type="hidden" name="rid" id="rid" class="text" value="' . ($rID) . '"></div>
+                                                        <div><input type="submit" class="signUp" Value="Join"></div>
+                                                    </form>';
+                                            } else {
+                                                echo '<form action="../PHPScript/LeaveMember.php"">
+                                                        <div><input type="hidden" name="rid" id="rid" class="text" value="' . ($rID) . '"></div>
+                                                        <div><input type="submit" class="signUp" Value="Leave"></div>
+                                                    </form>';
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ?>
+                    </div>
+                </pre>
             </div>
             <div class="rightColumn">
                 <div class="pic">
