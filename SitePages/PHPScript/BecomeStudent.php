@@ -20,5 +20,6 @@
             }
         }
         $stmt->close();
+        include "../PHPScript/NewStudent.php";
     }
 ?>
