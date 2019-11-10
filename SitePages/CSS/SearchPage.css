@@ -5,7 +5,6 @@ div.eventList {
     margin: 0;
     margin-bottom: -15px;
     padding: 15px;
-	padding-top: 0;
     position: relative;
     max-width: 700px;
     min-width: 500px;
@@ -15,7 +14,7 @@ div.eventList {
 
 /*the design for the items that will fill the list above*/
 div.event {
-    margin: 5px;
+    margin: 20px 5px;
     padding: 0px;
     background-color: rgba(48, 48, 60, .79);
     height: 200px;
@@ -61,6 +60,7 @@ div.text {
     height: 100px;
     position: relative;
     overflow-wrap: break-word;
+    overflow-y: scroll;
 }
 
 /*This div holds the information of start date and time*/
@@ -95,6 +95,14 @@ div.innerMap{
     position: relative;
     margin: auto;
     padding: 0;
+}
+
+div.setCol1{
+    color: green;
+}
+
+div.setCol0{
+    color: red;
 }
 
 /*redefines divs according to the size of the window and a font size*/
