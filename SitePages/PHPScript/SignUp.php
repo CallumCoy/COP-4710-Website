@@ -2,7 +2,7 @@
     require_once "config.php";
 
     // Define the variables and set to empty values
-    $email = $username = $password = $confirmPassword = "";
+    $email = $username = $password = $confirmPassword = $schoolID = "";
     $emailErr = $usernameErr = $passwordErr =  $comfirmPasswordErr = "";
 
     //process the form info
@@ -32,6 +32,23 @@
                         $emailErr = "this email has already been used";
                     } else {
                         $email = trim($_POST["email"]);
+
+                        $query =   'SELECT SchoolID, SchoolExt
+                                    FROM school';
+
+                        if($stmt1 = $link->prepare($query)){
+                            $stmt1->execute();
+                            $stmt1->bind_result($sid, $emailExt);
+                            $stmt1->store_result();
+
+                            while($stmt1->fetch()){
+                                if(strpos($email,$emailExt)){
+                                    $schoolID = $sid;
+                                    break;
+                                }
+                            }
+                        $stmt1->close();
+                        }
                     }
                 } else {
                     echo "Something seems to have happened please try again at a later time";
@@ -72,11 +89,11 @@
         #assuring no errors were called up until now
         if (empty($emailErr) && empty($usernameErr) && empty($passwordErr) && empty($comfirmPasswordErr)) {
             # prepare a insert statement
-            $sql = "INSERT INTO users (Username, Pasword, Email) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO users (Username, Pasword, Email, SchoolID) VALUES (?, ?, ?, ?)";
 
             if ($stmt = mysqli_prepare($link, $sql)) {
                 # bind the statement and parameters
-                mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password, $param_email);
+                mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password, $param_email, $schoolID);
 
                 #set the parameters
                 $param_username = $username;
@@ -85,7 +102,7 @@
                 $param_password = password_hash($password, PASSWORD_DEFAULT);
 
                 $param_email = $email;
-
+                
                 if (mysqli_stmt_execute($stmt)) {
                     echo 'hi';
                     header("location: /../index.php");
