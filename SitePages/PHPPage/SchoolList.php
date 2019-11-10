@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once '../PHPScript/SetCookies.php';
     require_once "../PHPScript/config.php";
+    include_once '../PHPScript/SetCookies.php';
 ?>
 <html>
     <head>
@@ -68,7 +68,9 @@
                                 <a href="../PHPPage/EditSchoolPage.php?sid=' . $schools . '"><div class="information">
                                     <h3>' . $sName .'</h3>
                                     <div class="text">
-                                        desc: ' . $sDesc .'
+                                        <pre>
+                                            ' . $sDesc .'
+                                        <pre>
                                     </div>  
                                     <div class="startInfo"></div>    
                                 </div>
