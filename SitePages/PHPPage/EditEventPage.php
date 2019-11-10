@@ -180,7 +180,6 @@ include_once '../PHPScript/GetEventFromID.php';
                                                         $stmt2->fetch();
 
                                                         
-                                                        error_log("EMAIL " . $email);
                                                         error_log($stmt2->error);
                                                         
                                                         if ($eHostRSO != $rsoNameOp){
@@ -200,23 +199,67 @@ include_once '../PHPScript/GetEventFromID.php';
                     }
                     
                 ?>
+                <div class="break"></div>
+                
+                <div class="section"> Start Date: </div>
+                <div class="inputSec"> <input type="date" name="StartDate" id="StartDate" value="<?php echo $eDate;?>" required> </div>
+                
+                <div class="section"> Start Time: </div><div class="inputSec"></div>
+                
+                    <select name="StartHours" required>
+                        <?php 
+                            for ($i=1; $i < 13; $i++) { 
+                                if ($i == $eHour) {
+                                    echo '<option value="' . $i . '" selected>' . $i . '</option>';
+                                } else {
+                                    echo '<option value="' . $i . '">' . $i . '</option>';
+                                }
+                            }
+                        ?>
+                    </select>
+                    <select name="StartMinute" value="<?php echo $eMin;?>" id="" required>
+                        <?php
+                            for ($i=0; $i < 60; $i = $i + 15) { 
+                                if ($i == 0) {
+                                    $i = "00";
+                                }
+                                if ($i == $eMin) {
+                                    echo '<option value="' . $i . '" selected>' . $i . '</option>';
+                                } else {
+                                    echo '<option value="' . $i . '">' . $i . '</option>';
+                                }
+                            }
+                        ?>
+                    </select>
+                    <select name="StartClockSide" required>
+                        <?php
+                            if ($eSide == "AM") {  
+                                echo'<option value="AM" selected>AM</option>
+                                     <option value="PM">PM</option>';
+                            } else {
+                                echo'<option value="AM">AM</option>
+                                     <option value="PM" selected>PM</option>';
+                            }
+                        ?>
+                    </select>
 
                 <div class="section"> Location for meetings </div>
                 <div class="break"></div>
                 <div class="section"> </div>
                 <div class="section"> Lat </div>
-                <div class="inputSec"><input type="number" name="Lat" id="Lat" min="-90" max="90" class="text"></div>
+                <div class="inputSec"><input type="number" step="0.05" name="Lat" id="Lat" value="<?php echo $eLat;?>" min="-90" max="90" class="text"></div>
                 <div class="section"> Long: </div>
-                <div class="inputSec"><input type="number" name="Long" id="Long" min="-180" max="180" class="text"></div>
+                <div class="inputSec"><input type="number" step="0.05" name="Long" id="Long" value="<?php echo $eLong;?>" min="-180" max="180" class="text"></div>
                 <div class="break"></div>
                 <div class="section"> </div>
                 <div class="section"> Building: </div>
-                <div class="inputSec"><input type="text" name="Building" id="Building" class="text"></div>
+                <div class="inputSec"><input type="text" name="Building" id="Building" value="<?php echo $eBuild;?>" class="text"></div>
                 <div class="section"> Floor: </div>
-                <div class="inputSec"><input type="number" name="Floor" id="Floor" class="text"></div>
+                <div class="inputSec"><input type="number" name="Floor" id="Floor" value="<?php echo $eFloor;?>" class="text"></div>
                 <div class="section"> Room: </div>
-                <div class="inputSec"><input type="text" name="Room" id="Room" class="text"></div>
+                <div class="inputSec"><input type="text" name="Room" id="Room" value="<?php echo $eRoom ;?>" class="text"></div>
                 <div class="inputSec"><input type="hidden" name="eid" id="eid" class="text" value="<?php echo ($eid);?>"</div>
+                <input type="hidden" name="Type"  id="Type" class="text" value="<?php echo ($eType);?>">
                 <br>
                 <input type="submit" value="create"> 
             </form>
