@@ -48,7 +48,10 @@
     date_default_timezone_set('US/Eastern');
     $search = $search . "Start_Time >= " . date(strtoTime("$date $time"));
         
+    error_log("numofgets = " . $numOfGets);
+
     if($numOfGets != 0){
+        error_log("search = " . $search);
         $search = $search . ' && ';
     }
 
@@ -58,8 +61,6 @@
         if($numOfGets != 0){
             $search = $search . ' && ';
         }
-    } else{
-        $numOfGets = $numOfGets - 1;
     }
     
     if(isset($_GET["School"]) && $_GET["School"] != NULL){
@@ -68,15 +69,14 @@
         if($numOfGets != 0){
             $search = $search . ' && ';
         }
-    } else{
-        $numOfGets = $numOfGets - 1;
     }
     
     if(isset($_GET["Host"]) && $_GET["Host"] != NULL){
         $search =  $search . "Host_RSO_ID = " . $_GET['Host'];
         $numOfGets = $numOfGets - 1;
-    } else{
-        $numOfGets = $numOfGets - 1;
+        if($numOfGets != 0){
+            $search = $search . ' && ';
+        } 
     }
     
     if(isset($_GET["UHost"]) && $_GET["UHost"] != NULL){
@@ -86,8 +86,6 @@
         if($numOfGets != 0){
             $search = $search . ' && ';
         } 
-    } else{
-        $numOfGets = $numOfGets - 1;
     }
 
     include "../PHPScript/AreTheyAdmin.php";
@@ -103,7 +101,7 @@
     $query = "  SELECT * 
                 FROM events 
                 WHERE " . $search . "
-                ORDER BY Start_Time DESC, EventName DESC";
+                ORDER BY Start_Time ASC, EventName ASC";
 
     error_log($query);
     
@@ -115,9 +113,12 @@
         include "../PHPScript/AreTheyAdmin.php";
 
         $stmt->store_result();
-
+        
+        error_log('number of events found ' .$stmt->num_rows());
         error_log($query . ' ' .$stmt->error);
         while($stmt->fetch()){
+
+            $eStart =date("F jS Y | h:i A", strtotime("$eStart"));
             
             $query =   "SELECT * 
                         FROM members
@@ -131,7 +132,11 @@
                     $numMem->store_result();
                     error_log($query . ' ' .$stmt->error);
                 }
-                if ($erHost != NULL || $numMem->num_rows()){
+
+                error_log('num of mems ' . $numMem->num_rows());
+                
+                if ($erHost == NULL || $numMem->num_rows() > 4 || $view == 0){
+                    error_log("hi");
                     if($eInvType == 0 && ($eApproved == 1 || $view == 0)){
                         echo   '<a ' . $command . $eID . '"> <div class="event" >
                                     <div class="eventPicDiv">
@@ -140,9 +145,11 @@
                                     <div class="information">
                                         <h3>' . $eName .'</h3>
                                         <div class="text">
-                                            desc: ' . $eDesc .'
+                                            <pre>
+                                                ' . $eDesc .'
+                                            <pre>
                                         </div>  
-                                        <div class="startInfo"> Date: ' . $eStart . '</div>    
+                                        <div class="startInfo">  ' . $eStart . '</div>    
                                     </div>
                                 </div> </a>';
                     } elseif($eInvType == 1 && ($eApproved == 1 || $view == 0)){ 
@@ -167,9 +174,11 @@
                                             <div class="information">
                                                 <h3>' . $eName .'</h3>
                                                 <div class="text">
-                                                    desc: ' . $eDesc .'
+                                                    <pre>
+                                                        ' . $eDesc .'
+                                                    <pre>
                                                 </div>  
-                                                <div class="startInfo"> Date: ' . $eStart . '</div>    
+                                                <div class="startInfo">  ' . $eStart . '</div>    
                                             </div>
                                         </div> </a>';
                             }
@@ -196,9 +205,11 @@
                                             <div class="information">
                                                 <h3>' . $eName .'</h3>
                                                 <div class="text">
-                                                    desc: ' . $eDesc .'
+                                                    <pre>
+                                                        ' . $eDesc .'
+                                                    <pre>
                                                 </div>  
-                                                <div class="startInfo"> Date: ' . $eStart . '</div>    
+                                                <div class="startInfo">  ' . $eStart . '</div>    
                                             </div>
                                         </div> </a>';
                             }
@@ -209,7 +220,6 @@
         }
     }
 
-    error_log($query . ' ' . $stmt2->error);
     error_log($query . ' ' . $link->error);
     $link->close();
 
