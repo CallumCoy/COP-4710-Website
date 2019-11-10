@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once '../PHPScript/SetCookies.php';
     require_once "../PHPScript/config.php";
+    include_once '../PHPScript/SetCookies.php';
     $type = 'Event';
 ?>
 <html>
