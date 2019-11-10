@@ -3,7 +3,7 @@
     
     error_log("hi");
 
-    $query = "  SELECT RSO_Name, RSO_Desc, RSO_ProfPic, NumofMembers
+    $query = "  SELECT RSO_Name, RSO_Desc, RSO_ProfPic, NumofMembers, SchoolID
                 FROM rso 
                 WHERE RSO_ID = ?";
 
@@ -12,7 +12,7 @@
         $stmt->bind_param("i", $rID);
         error_log($rID);
         $stmt->execute();
-        $stmt->bind_result($orName, $desc, $pic, $num);
+        $stmt->bind_result($orName, $desc, $pic, $num, $sid);
         $stmt->store_result();
         $stmt->fetch();
 
