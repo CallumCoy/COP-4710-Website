@@ -91,8 +91,9 @@ div.miniPic{
     min-width: 50px;
     height: 50px;
     min-height: 50px;
-    border-radius: 100%;
+    border-radius: 50%;
     position: inline;
+    border: none;
 }
 
 
@@ -160,4 +161,6 @@ select.overLap{
 
 pre{
     white-space: pre-wrap;
+    margin-top: 0px;
+    padding-top: 0;
 }
