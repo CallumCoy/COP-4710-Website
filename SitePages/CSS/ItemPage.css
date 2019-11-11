@@ -202,6 +202,7 @@ div.commentPopUp{
     align-content: center;
     text-align: center;
     position: fixed;
+    display: none;
     background-color: rgba(78, 78, 78, 0.78);
     border-radius: 10px;
     border: 1px solid black;
@@ -230,6 +231,21 @@ button.delete{
 
 button.delete:hover{
     background-color: red;
+    transition: all .4s ease;
+}
+
+div.greyout{
+    position: fixed;
+    left: 0;
+    top: 45px;
+    margin: auto;
+    display: none;
+    align-content: center;
+    text-align: center;
+    width: 100%;
+    height: calc(100% - 45px);
+    z-index: 19;
+    background-color: rgba(54, 53, 53, 0.486);
     transition: all .4s ease;
 }
 
