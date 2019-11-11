@@ -107,7 +107,7 @@
     
     if($stmt = $link->prepare($query)){
         $stmt->execute();
-        $stmt->bind_result($eID, $eName, $eStart, $ePic, $eLocID, $eDesc, $eInvType, $eHost, $erHost, $eSchoolID, $eApproved);
+        $stmt->bind_result($eID, $eName, $eStart, $ePic, $eLocID, $eDesc, $eInvType, $eHost, $erHost, $eSchoolID, $eApproved, $rating);
 
 
         include "../PHPScript/AreTheyAdmin.php";
@@ -140,14 +140,15 @@
                     if($eInvType == 0 && ($eApproved == 1 || $view == 0)){
                         echo   '<a ' . $command . $eID . '"> <div class="event" >
                                     <div class="eventPicDiv">
-                                        <img src="' . $ePic . '" alt="Space" class="eventPic">
+                                        <img src="' . $ePic . '"  class="eventPic">
                                     </div>
                                     <div class="information">
                                         <h3>' . $eName .'</h3>
                                         <div class="text">
                                             <pre>
                                                 ' . $eDesc .'
-                                            <pre>
+                                                ' . $rating
+                                            .'/5</pre>
                                         </div>  
                                         <div class="startInfo">  ' . $eStart . '</div>    
                                     </div>
@@ -169,14 +170,17 @@
                             if($stmt2->num_rows() == 1){
                                 echo   '<a ' . $command . $eID . '"> <div class="event" >
                                             <div class="eventPicDiv">
-                                                <img src="' . $ePic . '" alt="Space" class="eventPic">
+                                                <img src="' . $ePic . '"  class="eventPic">
                                             </div>
                                             <div class="information">
                                                 <h3>' . $eName .'</h3>
                                                 <div class="text">
                                                     <pre>
-                                                        ' . $eDesc .'
-                                                    <pre>
+                                                        '
+                                                        . $eDesc 
+                                                        . $rating
+                                                    .'/5</pre>
+                                                </div>  
                                                 </div>  
                                                 <div class="startInfo">  ' . $eStart . '</div>    
                                             </div>
@@ -200,14 +204,16 @@
                             if($stmt2->num_rows() == 1){
                                 echo   '<a '. $command . $eID . '"> <div class="event" >
                                             <div class="eventPicDiv">
-                                                <img src="' . $ePic . '" alt="Space" class="eventPic">
+                                                <img src="' . $ePic . '"  class="eventPic">
                                             </div>
                                             <div class="information">
                                                 <h3>' . $eName .'</h3>
                                                 <div class="text">
                                                     <pre>
-                                                        ' . $eDesc .'
-                                                    <pre>
+                                                        '
+                                                        . $eDesc 
+                                                        . $rating
+                                                    .'/5</pre>
                                                 </div>  
                                                 <div class="startInfo">  ' . $eStart . '</div>    
                                             </div>

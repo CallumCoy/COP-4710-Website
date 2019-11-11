@@ -32,23 +32,6 @@
                         $emailErr = "this email has already been used";
                     } else {
                         $email = trim($_POST["email"]);
-
-                        $query =   'SELECT SchoolID, SchoolExt
-                                    FROM school';
-
-                        if($stmt1 = $link->prepare($query)){
-                            $stmt1->execute();
-                            $stmt1->bind_result($sid, $emailExt);
-                            $stmt1->store_result();
-
-                            while($stmt1->fetch()){
-                                if(strpos($email,$emailExt)){
-                                    $schoolID = $sid;
-                                    break;
-                                }
-                            }
-                        $stmt1->close();
-                        }
                     }
                 } else {
                     echo "Something seems to have happened please try again at a later time";
@@ -93,7 +76,7 @@
 
             if ($stmt = mysqli_prepare($link, $sql)) {
                 # bind the statement and parameters
-                mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password, $param_email, $schoolID);
+                mysqli_stmt_bind_param($stmt, "sssi", $param_username, $param_password, $param_email, $schoolID);
 
                 #set the parameters
                 $param_username = $username;
@@ -104,7 +87,23 @@
                 $param_email = $email;
                 
                 if (mysqli_stmt_execute($stmt)) {
-                    echo 'hi';
+                    
+                        $query =   'SELECT SchoolID, SchoolExt
+                                    FROM school';
+
+                        if($stmt1 = $link->prepare($query)){
+                            $stmt1->execute();
+                            $stmt1->bind_result($sid, $emailExt);
+                            $stmt1->store_result();
+
+                            while($stmt1->fetch()){
+                                if(strpos($email,$emailExt)){
+                                    $schoolID = $sid;
+                                    break;
+                                }
+                            }
+                        $stmt1->close();
+                        }
                     header("location: /../index.php");
                 } else{
                     echo "something went wrong. I'm sowwy ;-;";

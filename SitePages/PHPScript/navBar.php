@@ -13,7 +13,7 @@
     }
 
     if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
-        echo '<li class="right"><a href="#"> Profile </a></li>
+        echo '<li class="right"><a href="/../PHPPage/EditUserPage.php"> Profile </a></li>
         <li class="right"><a href="/PHPScript/LogOut.php"> logOut </a></li>
         </ul>';
     } else{

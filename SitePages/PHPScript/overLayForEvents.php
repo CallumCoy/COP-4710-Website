@@ -11,7 +11,7 @@
             include "AreTheyAdmin.php";
             
             if($admin > 0){
-                echo '<a href="/PHPPage/EventListPage.php?admin=' . $admin . '&view=0">Edit My Events</a>';
+                echo '<a href="/PHPPage/EventListPage.php?admin=' . $admin . '&view=0">Approve Events</a>';
             }
 
             $sql = "SELECT 1

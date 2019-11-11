@@ -9,7 +9,9 @@
         #Adds some options if the user is logged in
         if (isset($_SESSION["loggedin"]) && ($_SESSION["loggedin"] === true)) {
             
-
+        if (isset($_SESSION["sid"])) {
+            echo '<a href="/PHPPage/editRSOPage.php">Make RSOs</a>';
+        }
 
             #shows an extra option if the user is an admin of any RSOs
             require_once "config.php";

@@ -20,6 +20,20 @@
         <link href="../CSS/ItemPage_LeftColumn.css" rel="stylesheet">
     </head>
     <body>
+        
+        
+        <script>
+            function openCommentBoxes(){
+                document.getElementById("commentPopUp").style.display = "block";
+                document.getElementById("greyscreen").style.display = "block";
+            }
+
+            //closes greyScreen, Login and signUp
+            function closeThem(){
+                document.getElementById("commentPopUp").style.display = "none";
+                document.getElementById("greyscreen").style.display = "none";
+            }
+        </script>
 
         <?php require '../PHPScript/navBar.php';?>
 
@@ -34,29 +48,33 @@
                     <pre>
                         <?php echo ($eDesc .'
                                     <br>'.
-                                    date("F jS Y | h:i A", strtotime("$eStart")));
+                                    date("F jS Y | h:i A", strtotime("$eStart"))) .
+                                    '<br>' .
+                                    $rating .'/5';
                         ?>
                     </pre>
                 </div>
                 
                 <div class="commentSection">
+                    <button name="btn" id="btn" class="btn" type="button" onclick="openCommentBoxes();">Comment</button>
                     <?php include "../PHPScript/PullComments.php";?>    
                 </div>
 
             </div>
                 <?php
-                    $query = "SELECT RSO_Name, NumofMembers
-                              FROM rso
-                              WHERE RSO_ID = ?";
+                    if(isset($rID) && $rID != NULL){
+                        $query = "SELECT RSO_Name, NumofMembers
+                                FROM rso
+                                WHERE RSO_ID = ?";
 
-                    if($stmt2 = $link->prepare($query)){
-
-                            $stmt2->bind_param("i", $rID);
+                        if($getRso = $link->prepare($query)){
+                            $getRso->bind_param("i", $rID);
                             $rID = $eHostRSO;
-                            $stmt2->execute();
-                            $stmt2->bind_result($rname, $num);
-                            $stmt2->store_result();
-                            $stmt2->fetch();
+                            $getRso->execute();
+                            $getRso->bind_result($rname, $num);
+                            $getRso->store_result();
+                            $getRso->fetch();
+
 
                             echo ('<div class="rightColumn">
                             HOSTED BY
@@ -64,7 +82,7 @@
                             $rname
                             . '</br>
                             <div class="pic">
-                                <img src="..\Sources\Images\413977.jpg" alt="Space" class="eventPic">
+                                <img src="' . $ePic . '"  class="eventPic">
                             </div>
                             Num of Members:
                             <br>');
@@ -79,15 +97,58 @@
                                 $admin = 'admins';
                                 include "../PHPScript/getAdmin.php";
 
-                            echo ('</div>
-                            </div>
-                            <div class="list">
-                                MEMBERS'); 
-                                    $people='members';
-                                    include "../PHPScript/GetPeople.php";
-                            echo ('</div>
+                            if ($rID != NULL) {
+                                echo ('</div>
+                                </div>
+                                <div class="list">
+                                    MEMBERS'); 
+                                        $people='members';
+                                        include "../PHPScript/GetPeople.php";
+                                echo ('</div>
+                                </div>');
+                            }    
+                        }
+                        $getRso->closoe();
+                    }else {
+
+                           error_log("$query, $link->error");
+                           $query = "SELECT Username, ProfilePic
+                           FROM Users
+                           WHERE UserID = ?";
+         
+                        if($stmt21 = $link->prepare($query)){
+                            $stmt21->bind_param("i", $eHostUser);
+                            $stmt21->execute();
+                            $stmt21->bind_result($Name, $Pic);
+                            $stmt21->store_result();
+                            $stmt21->fetch();
+                            
+                            echo ('<div class="rightColumn">
+                            HOSTED BY
+                            <br>' .
+                            $Name
+                            . '</br>
+                            <div class="pic">
+                                <img src="' . $ePic . '"  class="eventPic">
                             </div>');
+
+                            echo ('<div class="list">
+                                    <div class="person">
+                                        <div class="miniPic">
+                                                <img src="' . $Pic . '"  class="eventPic">
+                                            </div>                      
+                                            <div class="InfoTable">
+                                                <div class="Info">
+                                                    ' . $Name . '
+                                                </div>
+                                            </div>
+                                    </div>
+                                    </div>');
+                            
+                            $stmt21->close();
+                        } 
                     }
+                    error_log("$query, $link->error");
                 ?>
         </div>
 
@@ -100,51 +161,58 @@
                     
                     if($find = $link->prepare($query)){
                         
-                        $find->bind_param("ii", $_SESSION['id'], $eid);
-                        $fine->execute();
-                        $find->bind_result($uid, $Event, $rating, $text, $timeP, $dayP);
+                        $find->bind_param("ii", $_SESSION['id'], $_GET['Event']);
+                        $find->execute();
+                        $find->bind_result($uid, $f, $rating, $myText, $timeP, $dayP);
                         $find->store_result();
+                        
+                        error_log($_GET['Event']);
+
+                        echo "";
 
                         if ($find->num_rows()) {
                             
                             $find->fetch();
                             
-                            echo   '<div id="comment" class="comment">
-                                        <form action="/PHPScript/UpdateComment.php" method="post">
+                            echo   '<div id="commentPopUp" class="commentPopUp">
+                                        <form action="/PHPScript/UpdateComment.php">
                                             <h1> Edit Comment </h1>
                                 
                                             <div class="section"> Review </div>
-                                            <div class="inputSec"><textarea name="Review" id="reveiw" class="bigTextBox" wrap="hard" value="' . $text . 'required"</textarea></div>
+                                            <div class="inputSec"><textarea name="Review" id="reveiw" class="bigTextBox" wrap="hard"> ' . $myText . ' </textarea></div>
                                             
                                             <div class="section"> Rating </div>
-                                            <div class="inputSec"><input type="number" step="0.1" name="Lat" id="Lat" value="' . $rating . '" min="0" max="5" class="text" required></div>
+                                            <div class="inputSec"><input type="number" step="0.1" name="Rate" id="Rate" value="' . $rating . '" min="0" max="5" class="text" required></div>
                                             
-                                            <div class="inputSec"><input type="hidden" name="Event" id="Event" class="text" value="' . $Event .'"></div>
+                                            <div class="inputSec"><input type="hidden" name="Event" id="Event" class="text" value="' . $_GET['Event'] .'"></div>
 
                                             <br>
+
                                             <button type="submit" class="btn" name="action" value="update">Update</button>
-                                            <button type="submit" class="btn cancel" onclick="closeThem()" name="action" Value="delete">Delete</button>
+                                            <button type="submit" class="btn cancel" name="action" Value="delete">Delete</button>
+                                            <button type="button" class="btn cancel" onclick="closeThem();">Close</button>
                                             <div class="errBox">
                                             </div>
                                         </form>
                                     </div>';
-                                    
+
                         } else {
                             
-                            echo   '<div id="comment" class="comment">
-                                        <form action="/PHPScript/UpdateComment.php" method="post">
+                            echo   '<div id="commentPopUp" class="commentPopUp">
+                                        <form action="/PHPScript/UpdateComment.php">
                                             <h1> Edit Comment </h1>
                                 
                                             <div class="section"> Review </div>
-                                            <div class="inputSec"><textarea name="Review" id="reveiw" class="bigTextBox" wrap="hard" required"></textarea></div>
+                                            <div class="inputSec"><textarea name="Review" id="reveiw" class="bigTextBox" wrap="hard" required></textarea></div>
                                             
                                             <div class="section"> Rating </div>
-                                            <div class="inputSec"><input type="number" step="0.1" name="Lat" id="Lat" required min="0" max="5" class="text"></div>
+                                            <div class="inputSec"><input type="number" step="0.1" name="Rate" id="Rate" required min="0" max="5" class="text"></div>
                                             
-                                            <div class="inputSec"><input type="hidden" name="Event" id="Event" class="text" value="' . $Event .'"></div>
+                                            <div class="inputSec"><input type="hidden" name="Event" id="Event" class="text" value="' . $_GET['Event'] .'"></div>
 
                                             <br>
                                             <button type="submit" class="btn" name="action" value="create">Create</button>
+                                            <button type="button" class="btn cancel" onclick="closeThem();">Close</button>
                                             <div class="errBox">
                                             </div>
                                         </form>
@@ -155,21 +223,6 @@
             ?>
 
         <div class="greyout" id="greyscreen" onclick="closeThem(); "> </div>
-        
-        <script>
-            function openComment(){
-                document.getElementById("login").style.display = "none";
-                document.getElementById("comment").style.display = "block";
-                document.getElementById("greyscreen").style.display = "block";
-            }
-
-            //closes greyScreen, Login and signUp
-            function closeThem(){
-                document.getElementById("login").style.display = "none";
-                document.getElementById("sigcommentnUp").style.display = "none";
-                document.getElementById("greyscreen").style.display = "none";
-            }
-        </script>
         
     </body>
 </html>
