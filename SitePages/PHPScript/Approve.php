@@ -24,7 +24,7 @@
                    
                     $getEvents->bind_param("i", $rid);
                     $getEvents->execute();
-                    $getEvents->bind_result($eID, $eName, $eStart, $ePic, $eLocID, $eDesc, $eInvType, $eHost, $erHost, $eSchoolID, $eApproved);
+                    $getEvents->bind_result($eID, $eName, $eStart, $ePic, $eLocID, $eDesc, $eInvType, $eHost, $erHost, $eSchoolID, $eApproved, $rating);
                     $getEvents->store_result();
                    
                     while($getEvents->fetch()){
@@ -33,14 +33,15 @@
 
                         echo'<a href="../PHPPage/LoadEventPage.php?Event=' . $eID . '"> <div class="event" >
                                 <div class="eventPicDiv">
-                                    <img src="' . $ePic . '" alt="Space" class="eventPic">
+                                    <img src="' . $ePic . '"  class="eventPic">
                                 </div> </a>
                                 <a href="../PHPPage/EditEventPage.php?Event=' . $eID . '"><div class="information setCol' . $eApproved . '">
                                     <h3>' . $eName .'</h3>
                                     <div class="text">
                                         <pre>
                                             ' . $eDesc .'
-                                        <pre>
+                                            ' . $rating
+                                        .'/5</pre>
                                     </div>  
                                     <div class="startInfo">' . $time . '</div>    
                                 </div>
@@ -77,7 +78,7 @@
                 
                     $getEvents->bind_param("i", $sid);
                     $getEvents->execute();
-                    $getEvents->bind_result($eID, $eName, $eStart, $ePic, $eLocID, $eDesc, $eInvType, $eHost, $erHost, $eSchoolID, $eApproved);
+                    $getEvents->bind_result($eID, $eName, $eStart, $ePic, $eLocID, $eDesc, $eInvType, $eHost, $erHost, $eSchoolID, $eApproved, $rating);
                     $getEvents->store_result();
                 
                     while($getEvents->fetch()){
@@ -86,14 +87,15 @@
 
                         echo'<a href="../PHPPage/LoadEventPage.php?Event=' . $eID . '"> <div class="event" >
                                 <div class="eventPicDiv">
-                                    <img src="' . $ePic . '" alt="Space" class="eventPic">
+                                    <img src="' . $ePic . '"  class="eventPic">
                                 </div> </a>
                                 <a href="../PHPPage/EditEventPage.php?Event=' . $eID . '"><div class="information setCol' . $eApproved . '">
                                     <h3>' . $eName .'</h3>
                                     <div class="text">
                                         <pre>
                                             ' . $eDesc .'
-                                        <pre>
+                                            ' . $rating
+                                        .'/5</pre>
                                     </div>  
                                     <div class="startInfo">' . $time . '</div>    
                                 </div>

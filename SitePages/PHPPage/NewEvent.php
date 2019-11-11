@@ -22,13 +22,13 @@ include_once '../PHPScript/GetEventFromID.php';
 
         <body onload="PreviewImage();">
         <div class="holder">
-            <form action="/../PHPScript/UpdateEvent.php?eid=<?php echo $eid; ?>" type="post">
+            <form action="/../PHPScript/UpdateEvent.php?eid=<?php echo $eid; ?>" method="post" enctype="multipart/form-data">
 
                 
                 <div class="section"> Pic </div>
-                <div class="inputSec"> <input type="file" name="myPhoto" id="uploadImage" onchange="PreviewImage();" value="<?php echo $ePic; ?>"></div>
+                <div class="inputSec"> <input type="file" name="uploadImage" id="uploadImage" onchange="PreviewImage();" value="<?php echo $ePic; ?>"></div>
                 <div class="picPreview">
-                        <img src="../sources/<?php echo $ePic; ?>" id="uploadPreview" alt="Space" class="eventPic" >
+                        <img src="../sources/<?php echo $ePic; ?>" id="uploadPreview"  class="eventPic" >
                 </div>    
                 <div class="break"></div>
 

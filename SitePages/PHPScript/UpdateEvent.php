@@ -4,22 +4,24 @@
 
     $uid = $rid = $name = $desc = $pic = $Lat = $Long = $Building = $Floor = $Room = $eid = $error = "";
 
-    $eid = trim($_GET["eid"]);
+    $eid = trim($_POST["eid"]);
     $uid = trim($_SESSION["id"]);
-    $rid = trim($_GET["rid"]);
-    $name = trim($_GET["Name"]);
-    $desc = trim($_GET["Desc"]);
-    $pic = trim($_GET["myPhoto"]);
-    $date = trim($_GET["StartDate"]);
-    $hour = trim($_GET["StartHours"]);
-    $min = trim($_GET["StartMinute"]);
-    $clockCycle = trim($_GET["StartClockSide"]);
-    $Lat = trim($_GET["Lat"]);
-    $Long = trim($_GET["Long"]);
-    $Building = trim($_GET["Building"]);
-    $Floor = trim($_GET["Floor"]);
-    $Room = trim($_GET["Room"]);
-    $invType = trim($_GET['Type']);
+    $rid = trim($_POST["rid"]);
+    $name = trim($_POST["Name"]);
+    $desc = trim($_POST["Desc"]);
+    $date = trim($_POST["StartDate"]);
+    $hour = trim($_POST["StartHours"]);
+    $min = trim($_POST["StartMinute"]);
+    $clockCycle = trim($_POST["StartClockSide"]);
+    $Lat = trim($_POST["Lat"]);
+    $Long = trim($_POST["Long"]);
+    $Building = trim($_POST["Building"]);
+    $Floor = trim($_POST["Floor"]);
+    $Room = trim($_POST["Room"]);
+    $invType = trim($_POST['Type']);
+
+    include '../PHPScript/SetUpPicture.php';
+
     if ($rid < 1){
         $rid = NULL;
         if ($invType == 2){
@@ -50,7 +52,7 @@
                 WHERE MainLocationID = ? && Start_Time = ?';
 
     if($check = $link->prepare($query)){
-        
+         
         $check->bind_param('is', $lid, $time);
         $check->execute();
         $check->store_result();

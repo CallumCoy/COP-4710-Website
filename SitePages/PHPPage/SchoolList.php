@@ -22,7 +22,7 @@
         </script><script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIY0b4bKUEcux9O822gFjvSwREmpGgJ1s"></script>
         <script src="JavaScript/map.js"></script>
         
-        <?php require '../PHPScript/overLayForEvents.php';?>
+        <a href="../PHPPage/EditSchoolPage.php?sid=0"><span style="font-size:35px;cursor:pointer;font-weight:bolder"> + </span></a>
 
         <?php require '../PHPScript/navBar.php';?>
 
@@ -63,7 +63,7 @@
 
                             echo   '<a href="../PHPPage/LoadSchool.php?sid=' . $schools . '"> <div class="event" >
                                 <div class="eventPicDiv">
-                                    <img src="' . $sPic . '" alt="Space" class="eventPic">
+                                    <img src="' . $sPic . '"  class="eventPic">
                                 </div> </a>
                                 <a href="../PHPPage/EditSchoolPage.php?sid=' . $schools . '"><div class="information">
                                     <h3>' . $sName .'</h3>

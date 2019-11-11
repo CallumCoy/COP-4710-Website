@@ -78,7 +78,7 @@
             </div>
             <div class="rightColumn">
                 <div class="pic">
-                    <img src="..\Sources\Images\413977.jpg" alt="Space" class="eventPic">
+                    <img src="..\Sources\Images\413977.jpg"  class="eventPic">
                 </div>
                 Num of Members:
                 <br>

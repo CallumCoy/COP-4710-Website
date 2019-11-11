@@ -1,23 +1,30 @@
 <?php
+    session_start();
+    require_once '../PHPScript/config.php';
     include_once '../PHPScript/IsLoggedIn.php';
+    include_once '../PHPScript/SetCookies.php';
 
     $uid = $name = $desc = $pic = $error = "";
 
-    $uid = trim($_GET["uid"]);
-    $Email = trim($_GET["Email"]);
-    $name = trim($_GET["Name"]);
-    $desc = trim($_GET["Desc"]);
-    $pic = trim($_GET["myPhoto"]);
+    $uid = trim($_POST["uid"]);
+    $Email = trim($_POST["Email"]);
+    $name = trim($_POST["Name"]);
+    $desc = trim($_POST["Desc"]);
+
+    include '../PHPScript/SetUpPicture.php';
 
     if($_SESSION['id'] == $uid){
+
         $query =   'UPDATE users
-                    SET Username = ?, ProfilePic = ?, Email = ?, Bio = ?
-                    WHERE UserID = ?';
-        
+        SET Username = ?, ProfilePic = ?, Email = ?, Bio = ?
+        WHERE UserID = ?';
+
         if($update = $link->prepare($query)){
             $update->bind_param('ssssi', $name, $pic, $Email, $desc, $uid);
             $update->execute();
             $update->close();
         }
     } 
+
+    header("location: ../PHPPage/EditUserPage.php");
 ?>

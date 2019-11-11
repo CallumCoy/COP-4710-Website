@@ -3,11 +3,12 @@
 
     $uid = $name = $desc = $pic = $error = "";
 
-    $uid = trim($_GET["uid"]);
-    $name = trim($_GET["Name"]);
-    $desc = trim($_GET["Desc"]);
-    $pic = trim($_GET["myPhoto"]);
+    $uid = trim($_POST["uid"]);
+    $name = trim($_POST["Name"]);
+    $desc = trim($_POST["Desc"]);
 
+    include '../PHPScript/SetUpPicture.php';
+    
     require_once "config.php";
 
     #does this data already exist?

@@ -35,7 +35,7 @@
 
                 echo ('<div class="person">
                             <div class="miniPic">
-                                    <img src="' . $Pic . '" alt="Space" class="eventPic">
+                                    <img src="' . $Pic . '"  class="eventPic">
                                 </div>                      
                                 <div class="InfoTable">
                                     <div class="Info">

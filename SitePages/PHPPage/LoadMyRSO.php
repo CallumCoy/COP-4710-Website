@@ -85,7 +85,7 @@
                     if($num < 5){
                         echo   '<a '. $command . $RSO . '"> <div class="event" >
                                     <div class="eventPicDiv">
-                                        <img src="' . $pic . '" alt="Space" class="eventPic">
+                                        <img src="' . $pic . '"  class="eventPic">
                                     </div>
                                     <div class="information">
                                         <h3>' . $name .'</h3>
@@ -100,7 +100,7 @@
                         echo   '<a '. $command . $RSO .'> <div class="event" >
                                 <div class="event">
                                     <div class="eventPicDiv">
-                                        <img src="' . $pic . '" alt="Space" class="eventPic">
+                                        <img src="' . $pic . '"  class="eventPic">
                                     </div>
                                     <div class="information">
                                         <h3>' . $name .'</h3>

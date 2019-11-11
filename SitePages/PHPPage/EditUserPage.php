@@ -1,10 +1,8 @@
 <?php
     session_start();
+    require_once '../PHPScript/config.php';
     include_once '../PHPScript/IsLoggedIn.php';
     include_once '../PHPScript/SetCookies.php';
-    require_once '../PHPScript/config.php';
-
-    if ($num != 0){
 
         $query = "  SELECT Username, ProfilePic, Email, Bio
                     FROM users
@@ -18,7 +16,6 @@
             $stmt->fetch();
             $stmt->close();
         } 
-    }
 
 ?>
 <html>
@@ -35,12 +32,12 @@
 
         <body onload="PreviewImage();">
         <div class="holder">
-            <form action="/../PHPScript/UpdateUser.php" type="post">
+            <form action="/../PHPScript/UpdateUser.php"  method="post" enctype="multipart/form-data">
 
                 <div class="section"> Pic </div>
-                <div class="inputSec"> <input type="file" name="myPhoto" id="uploadImage" onchange="PreviewImage();" value="<?php echo $pic; ?>"></div>
+                <div class="inputSec"> <input type="file" name="uploadImage" id="uploadImage" onchange="PreviewImage();" value="<?php echo $uPic; ?>"></div>
                 <div class="picPreview">
-                        <img src="../sources/<?php echo $uPic; ?>" id="uploadPreview" alt="Space" class="eventPic" >
+                        <img src="<?php echo $uPic; ?>" id="uploadPreview"  class="eventPic" >
                 </div>    
                 <div class="break"></div>
 

@@ -4,20 +4,20 @@
 
     $uid = $rid = $name = $desc = $pic = $Lat = $Long = $Building = $Floor = $Room = $eid = $error = "";
 
-    $sid = trim($_GET["eid"]);
-    $uid = trim($_GET["uid"]);
-    $name = trim($_GET["Name"]);
-    $desc = trim($_GET["Desc"]);
-    $pic = trim($_GET["myPhoto"]);
-    $Lat = trim($_GET["Lat"]);
-    $Long = trim($_GET["Long"]);
-    $SchoolExt = trim($_GET["SchoolExt"]);
+    $sid = trim($_POST["eid"]);
+    $uid = trim($_POST["uid"]);
+    $name = trim($_POST["Name"]);
+    $desc = trim($_POST["Desc"]);
+    $Lat = trim($_POST["Lat"]);
+    $Long = trim($_POST["Long"]);
+    $SchoolExt = trim($_POST["SchoolExt"]);
     if ($sid < 1){
         $sid = NULL;
     }
 
     require_once "config.php";
     include '../PHPScript/AreTheyAdmin.php';
+    include '../PHPScript/SetUpPicture.php';
 
     #does this data already exist?
 

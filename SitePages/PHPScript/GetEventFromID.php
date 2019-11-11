@@ -1,12 +1,12 @@
 <?php
-    $query =   "SELECT EventName, Start_Time, EventPic, MainLocationID, EventDesc, InviteType, HostingUserID, Host_RSO_ID
+    $query =   "SELECT EventName, Start_Time, EventPic, MainLocationID, EventDesc, InviteType, HostingUserID, Host_RSO_ID, rating
                 FROM events
                 WHERE EventID = ?";
 
     if($stmt = $link->prepare($query)){
         $stmt->bind_param('i', $_GET['Event']);
         $stmt->execute();
-        $stmt->bind_result($eName, $eStart, $ePic, $eLocID, $eDesc, $eType, $eHostUser, $eHostRSO);
+        $stmt->bind_result($eName, $eStart, $ePic, $eLocID, $eDesc, $eType, $eHostUser, $eHostRSO, $rating);
         $stmt->store_result();
         $stmt->fetch();
 

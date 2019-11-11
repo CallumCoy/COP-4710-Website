@@ -13,7 +13,6 @@
         $rid = 0;
     }
     error_log($rid);
-    error_log($_SESSION['id']);
     error_log($admin);
 
     $query = "  SELECT 1

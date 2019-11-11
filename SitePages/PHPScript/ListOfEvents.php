@@ -22,8 +22,8 @@
     }
 
     $query = '  SELECT EventName
-    FROM events
-    WHERE InviteType = 1';
+                FROM events
+                WHERE InviteType = 1';
 
     if($stmt = $link->prepare($query)){
 

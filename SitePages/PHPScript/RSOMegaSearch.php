@@ -45,7 +45,7 @@
             if($num > 4){
                 echo   '<a href="../PHPPage/LoadRSOPage.php?RSO=' . $rid . '"> <div class="event" >
                             <div class="eventPicDiv">
-                                <img src="' . $pic . '" alt="Space" class="eventPic">
+                                <img src="' . $pic . '"  class="eventPic">
                             </div>
                             <div class="information">
                                 <h3>' . $orName .'</h3>
@@ -60,7 +60,7 @@
             } else{
                 echo   '<a href="../PHPPage/LoadRSOPage.php?RSO=' . $rid . '"> <div class="event" >
                             <div class="eventPicDiv">
-                                <img src="' . $pic . '" alt="Space" class="eventPic">
+                                <img src="' . $pic . '"  class="eventPic">
                             </div>
                             <div class="information">
                                 <h3>' . $orName .'</h3>

@@ -7,7 +7,7 @@ include_once '../PHPScript/SetCookies.php';
 include_once '../PHPScript/GetEventFromID.php';
 
 include '../PHPScript/AreTheyAdmin.php';
-
+error_log($_GET['sid']. " $admin ");
     if(!isset($_GET['sid']) || $admin < 2){
         header("location: ../index.php");
     } elseif($sid == 0) {
@@ -31,13 +31,13 @@ include '../PHPScript/AreTheyAdmin.php';
 
         <body onload="PreviewImage();">
         <div class="holder">
-            <form action="/../PHPScript/UpdateSchool.php?sid=<?php echo $sid; ?>" type="post">
+            <form action="/../PHPScript/UpdateSchool.php?sid=<?php echo $sid; ?>" method="post" enctype="multipart/form-data">
 
                 
                 <div class="section"> Pic </div>
-                <div class="inputSec"> <input type="file" name="myPhoto" id="uploadImage" onchange="PreviewImage();" value="<?php echo $ePic; ?>"></div>
+                <div class="inputSec"> <input type="file" name="uploadImage" id="uploadImage" onchange="PreviewImage();" value="<?php echo $ePic; ?>"></div>
                 <div class="picPreview">
-                        <img src="../sources/<?php echo $ePic; ?>" id="uploadPreview" alt="Space" class="eventPic" >
+                        <img src="../sources/<?php echo $ePic; ?>" id="uploadPreview"  class="eventPic" >
                 </div>    
                 <div class="break"></div>
 

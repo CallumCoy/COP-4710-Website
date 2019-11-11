@@ -5,12 +5,18 @@ include_once '../PHPScript/SetCookies.php';
 require_once '../PHPScript/config.php';
 
 error_log("num of gets " . count($_GET));
-    $name = $_GET['name'];
-    $desc = $_GET['desc'];
-    $pic = $_GET['pic'];
-    $num = $_GET['num'];
+$name = $desc = $pic = "";
+$num = 0;
 
-
+    if(isset($_GET['name'])){
+        $name = $_GET['name'];
+    }
+    if(isset($_GET['desc'])){
+        $desc = $_GET['desc'];
+    }
+    if(isset($_GET['num'])){
+        $num = $_GET['num'];
+    }
 
     if ($num != 0){
 
@@ -52,12 +58,12 @@ error_log("num of gets " . count($_GET));
 
         <body onload="PreviewImage();">
         <div class="holder">
-            <form action="/../PHPScript/UpdateRSO.php" type="post">
+            <form action="/../PHPScript/UpdateRSO.php" method="post" enctype="multipart/form-data">
 
                 <div class="section"> Pic </div>
-                <div class="inputSec"> <input type="file" name="myPhoto" id="uploadImage" onchange="PreviewImage();" value="<?php echo $pic; ?>"></div>
+                <div class="inputSec"> <input type="file" name="uploadImage" id="uploadImage" onchange="PreviewImage();" value="<?php echo $pic; ?>"></div>
                 <div class="picPreview">
-                        <img src="../sources/<?php echo $pic; ?>" id="uploadPreview" alt="Space" class="eventPic" >
+                        <img src="../sources/<?php echo $pic; ?>" id="uploadPreview"  class="eventPic" >
                 </div>    
                 <div class="break"></div>
 

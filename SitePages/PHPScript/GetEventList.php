@@ -1,5 +1,5 @@
 <?php
-$query = "SELECT EventID, EventName, Start_Time, EventPic, EventDesc, InviteType, Host_RSO_ID
+$query = "SELECT EventID, EventName, Start_Time, EventPic, EventDesc, InviteType, Host_RSO_ID, rating
           FROM events
           WHERE SchoolID = ?
           ORDER BY Start_Time DESC, EventName DESC";
@@ -7,7 +7,7 @@ $query = "SELECT EventID, EventName, Start_Time, EventPic, EventDesc, InviteType
 if  ($stmt = $link->prepare($query)){
     
     $stmt->bind_param("i", $_SESSION["sid"]);
-    $stmt->bind_result($eID, $eName, $eStart, $ePic, $eDesc, $eInvType, $host);
+    $stmt->bind_result($eID, $eName, $eStart, $ePic, $eDesc, $eInvType, $host, $rating);
     $stmt->execute();
     $stmt->store_result();
 
@@ -21,14 +21,15 @@ if  ($stmt = $link->prepare($query)){
         if($eInvType < 2){
             echo   '<a href="../PHPPage/LoadEventPage.php?Event=' . $eID . '"> <div class="event" >
                         <div class="eventPicDiv">
-                            <img src="' . $ePic . '" alt="Space" class="eventPic">
+                            <img src="' . $ePic . '"  class="eventPic">
                         </div>
                         <div class="information">
                             <h3>' . $eName .'</h3>
                             <div class="text">
                                 <pre>'
-                                    . $eDesc .
-                                '</pre>
+                                    . $eDesc 
+                                    . $rating
+                                .'/5</pre>
                             </div>  
                             <div class="startInfo"> Date: ' . $eStart . '</div>    
                         </div>
@@ -49,14 +50,15 @@ if  ($stmt = $link->prepare($query)){
                 if($stmt2->num_rows() == 1){
                     echo   '<a href="../PHPPage/LoadEventPage.php?Event=' . $eID . '"> <div class="event" >
                                 <div class="eventPicDiv">
-                                    <img src="' . $ePic . '" alt="Space" class="eventPic">
+                                    <img src="' . $ePic . '"  class="eventPic">
                                 </div>
                                 <div class="information">
                                     <h3>' . $eName .'</h3>
                                     <div class="text">
                                         <pre>
                                             ' . $eDesc .'
-                                        </pre>
+                                            ' . $rating
+                                        .'/5</pre>
                                     </div>  
                                     <div class="startInfo"> Date: ' . $eStart . '</div>    
                                 </div>

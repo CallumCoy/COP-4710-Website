@@ -39,7 +39,7 @@
             
             echo ('
             <div class="miniPic">
-                <img src="' . $aPic . '" alt="Space" class="eventPic">
+                <img src="' . $aPic . '"  class="eventPic">
             </div>
             <div class="InfoTable">
                 <div class="Info">
