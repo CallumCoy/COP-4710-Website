@@ -110,7 +110,7 @@
                                 </div>');
                             }    
                         }
-                        $getRso->closoe();
+                        $getRso->close();
                     }else {
 
                            error_log("$query, $link->error");

@@ -45,7 +45,7 @@
                     VALUES (default, ?, ?, ?, 0, 0, ?, ?, ?)";
 
         if($make = $link->prepare($query)){
-            $make->bind_param("sssiis", $name, $pic, $desc, $Lat, $Long, $SchoolExt);
+            $make->bind_param("sssiis", $name, $pic, $desc, $Lat, $Long, trim($SchoolExt));
             $make->execute();
             $make->close();
         }

@@ -2,11 +2,13 @@
     session_start();
     include_once '../PHPScript/IsLoggedIn.php';
 
-    $uid = $rid = $name = $desc = $pic = $Lat = $Long = $Building = $Floor = $Room = $eid = $error = "";
+    $uid = $rid = $name = $desc = $Lat = $Long = $Building = $Floor = $Room = $eid = $error = "";
 
     $eid = trim($_POST["eid"]);
     $uid = trim($_SESSION["id"]);
-    $rid = trim($_POST["rid"]);
+    if (isset($_POST["rid"])) {
+        $rid = trim($_POST["rid"]);
+    }
     $name = trim($_POST["Name"]);
     $desc = trim($_POST["Desc"]);
     $date = trim($_POST["StartDate"]);
@@ -113,24 +115,23 @@
                     $stmt1->store_result();
                     $stmt1->fetch();
 
-                    error_log("RSO created? Error: " . $stmt2->error);
-                    error_log("RSO created? Error: " . $rid);
+                    error_log("RSO created? Error: ROWS " . $stmt1->num_rows());
 
-                    if($stmt1->num_rows < 1){
+                    if($stmt1->num_rows() < 1){
                         $query =   "INSERT INTO events
-                                    VALUES (default, ?,?,?,?,?,?,?,?,?,?)";
+                                    VALUES (default, ?,?,?,?,?,?,?,?,?,?, 5)";
                         
                         error_Log("0 rows");
-                        if($stmt2 = $link->prepare($query)){
+                        if($stmt21 = $link->prepare($query)){
                             error_Log($_SESSION["sid"] . " " . $_SESSION["id"]);
-                            $time = "2019-11-14 07:00:00";
-                            $stmt2->bind_param("sssisiiiii", $name, $time, $pic, $lid, $desc, $invType, $uid ,$rid, $_SESSION['sid'], $admin);
-                            $stmt2->execute();
+                            $stmt21->bind_param("sssisiiiii", $name, $time, $pic, $lid, $desc, $invType, $uid ,$rid, $_SESSION['sid'], $admin);
+                            $stmt21->execute();
                             error_log("RSO created? Error: " . $stmt2->error);
-                            error_log("RSO created? Error: " . $name . ' ' . $time . ' ' . $pic . ' ' . $desc . ' ' . $invType . ' ' . $uid . ' ' . $rid . ' ' . $eid . ' ' . $admin);
+                            error_log("RSO created? Error: " . $name . ', ' . $time . ', ' . $pic . ', ' . $desc . ', ' . $invType . ' ' . $uid . ' ' . $rid . ' ' . $eid . ' ' . $admin);
 
-                            $stmt2->close();
+                            $stmt21->close();
                         }
+    error_log("file updated? Error: $link->error $query");
 
                     }
                 }
@@ -162,6 +163,5 @@
         header("location: /../PHPPage/LoadEventPage.php?Event=". $eid);
         $stmt1->close();
     }
-    error_log("file updated? Error: $link->error $query");
     $link->close();
 ?>

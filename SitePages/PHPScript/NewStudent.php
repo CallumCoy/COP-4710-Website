@@ -1,7 +1,7 @@
 <?php
 
     $query =   'INSERT INTO students
-                VALUES (' . $sid . ', ' . $uid . ')';
+                VALUES (' . $uid . ', ' . $sid . ')';
                 
     if ($update = $link->prepare($query)){
         $update->execute();

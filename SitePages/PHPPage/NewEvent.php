@@ -60,7 +60,7 @@ include_once '../PHPScript/GetEventFromID.php';
                 </div> -->
                 
                 <?php
-                    
+                    $first = 0;
                     
                     echo   '<div class="break"></div>
                            <div class="inputSec"></div>
@@ -134,6 +134,29 @@ include_once '../PHPScript/GetEventFromID.php';
                                     </select>
                                     <div class="bigBreak"></div>';
                         }
+                    }
+
+                    if ($first == 1) {
+                        
+                        echo '<div class="section"> Invite Type: </div>
+                                <div class="inputSec">
+                                    <select name="Type"  id="Type" class="text">
+                                        <option value="0">Public</option>
+                                        <option value="1">School Wide</option>
+                                        <option value="2">Club Only</option>
+                                    </select>
+                                </div>
+                                <div class="break"></div>';
+                    } else {
+                        
+                        echo '<div class="section"> Invite Type: </div>
+                                <div class="inputSec">
+                                    <select name="Type"  id="Type" class="text">
+                                        <option value="0">Public</option>
+                                        <option value="1">School Wide</option>
+                                    </select>
+                                </div>
+                                <div class="break"></div>';
                     }
                     
                 ?>

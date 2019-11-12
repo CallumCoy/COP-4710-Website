@@ -72,11 +72,11 @@
         #assuring no errors were called up until now
         if (empty($emailErr) && empty($usernameErr) && empty($passwordErr) && empty($comfirmPasswordErr)) {
             # prepare a insert statement
-            $sql = "INSERT INTO users (Username, Pasword, Email, SchoolID) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO users (Username, Pasword, Email) VALUES (?, ?, ?)";
 
             if ($stmt = mysqli_prepare($link, $sql)) {
                 # bind the statement and parameters
-                mysqli_stmt_bind_param($stmt, "sssi", $param_username, $param_password, $param_email, $schoolID);
+                mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password, $param_email);
 
                 #set the parameters
                 $param_username = $username;
@@ -86,24 +86,9 @@
 
                 $param_email = $email;
                 
+                
                 if (mysqli_stmt_execute($stmt)) {
                     
-                        $query =   'SELECT SchoolID, SchoolExt
-                                    FROM school';
-
-                        if($stmt1 = $link->prepare($query)){
-                            $stmt1->execute();
-                            $stmt1->bind_result($sid, $emailExt);
-                            $stmt1->store_result();
-
-                            while($stmt1->fetch()){
-                                if(strpos($email,$emailExt)){
-                                    $schoolID = $sid;
-                                    break;
-                                }
-                            }
-                        $stmt1->close();
-                        }
                     header("location: /../index.php");
                 } else{
                     echo "something went wrong. I'm sowwy ;-;";
@@ -113,8 +98,52 @@
 
             #close the statement
             mysqli_stmt_close($stmt);
-        }
 
+            $query =   "SELECT UserID
+                        FROM users
+                        WHERE Email = ?";
+            
+            if ($stmt2 = $link->prepare($query)) {
+
+                $stmt2->bind_param("s", $email);
+                $stmt2->execute();
+                $stmt2->bind_result($uid);
+                $stmt2->store_result();
+                $stmt2->fetch();
+
+                $query =   'SELECT SchoolID, SchoolExt
+                            FROM school';
+
+                if($stmt1 = $link->prepare($query)){
+                    $stmt1->execute();
+                    $stmt1->bind_result($sid, $emailExt);
+                    $stmt1->store_result();
+
+                    while($stmt1->fetch()){
+                        error_log("$sid, $emailExt");
+                        if(strpos(trim($email),trim($emailExt))){
+                            error_log("$sid, $emailExt");
+                            $schoolID = $sid;
+                            include "../PHPScript/newStudent.php";
+
+                            $query =   "UPDATE users
+                                        SET SchoolID = $sid
+                                        WHERE UserID = $uid";
+                                
+                                if ($update = $link->prepare($query)) {
+                                    $update->execute();
+                                    $update->close();
+                                }
+                            break;
+                        }
+                    }
+                    $stmt1->close();
+                }
+
+                $stmt2->close();
+            }
+        }
+        error_log("$query $link->error");
         #close the connection
         mysqli_close($link);
         echo $emailErr . " - " . $usernameErr . " - " . $passwordErr . " - " . $comfirmPasswordErr;

@@ -248,9 +248,9 @@ include_once '../PHPScript/GetEventFromID.php';
                 <div class="break"></div>
                 <div class="section"> </div>
                 <div class="section"> Lat </div>
-                <div class="inputSec"><input type="number" step="0.05" name="Lat" id="Lat" value="<?php echo $eLat;?>" min="-90" max="90" class="text"></div>
+                <div class="inputSec"><input type="number" step="0.05" name="Lat" id="Lat" value="<?php echo $eLat;?>" min="-90" max="90" class="text" required></div>
                 <div class="section"> Long: </div>
-                <div class="inputSec"><input type="number" step="0.05" name="Long" id="Long" value="<?php echo $eLong;?>" min="-180" max="180" class="text"></div>
+                <div class="inputSec"><input type="number" step="0.05" name="Long" id="Long" value="<?php echo $eLong;?>" min="-180" max="180" class="text" required></div>
                 <div class="break"></div>
                 <div class="section"> </div>
                 <div class="section"> Building: </div>
