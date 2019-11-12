@@ -6,8 +6,8 @@
 
     if (isset($_GET["level"])){
         $level = $_GET["level"];
-        if($level == 'admin'){
-            $command = 'href="../PHPScript/getRSOInfo.php?RSO=';#TODO
+        if($level == 'admins'){
+            $command = 'href="../PHPPage/editRSOPage.php?RSO=';
         } else {
             $command = 'href="../PHPPage/LoadRSOPage.php?RSO=';
         }

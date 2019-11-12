@@ -1,13 +1,5 @@
 <?php
     $admin = 0;
-
-    if(!isset($sid)){
-        if(isset($_SESSION['id'])){
-            $sid = $_SESSION['id'];
-        } else {
-            $sid = 0;
-        }
-    }
     
     if(!isset($rid)){
         $rid = 0;

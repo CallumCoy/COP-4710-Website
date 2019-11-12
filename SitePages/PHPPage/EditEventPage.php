@@ -33,7 +33,7 @@ include_once '../PHPScript/GetEventFromID.php';
                 <div class="section"> Pic </div>
                 <div class="inputSec"> <input type="file" name="uploadImage" id="uploadImage" onchange="PreviewImage();" value="<?php echo $ePic; ?>"></div>
                 <div class="picPreview">
-                        <img src="../sources/<?php echo $ePic; ?>" id="uploadPreview"  class="eventPic" >
+                        <img src="<?php echo $ePic; ?>" id="uploadPreview"  class="eventPic" >
                 </div>    
                 <div class="break"></div>
 
@@ -164,6 +164,7 @@ include_once '../PHPScript/GetEventFromID.php';
                                                 $stmt1->store_result();
                                                 
                                                 error_log($stmt1->error);
+                                                echo '<option value="' . NULL . '"> </option>';
 
                                                 while($stmt1->fetch()){
 
@@ -258,7 +259,8 @@ include_once '../PHPScript/GetEventFromID.php';
                 <div class="inputSec"><input type="number" name="Floor" id="Floor" value="<?php echo $eFloor;?>" class="text"></div>
                 <div class="section"> Room: </div>
                 <div class="inputSec"><input type="text" name="Room" id="Room" value="<?php echo $eRoom ;?>" class="text"></div>
-                <div class="inputSec"><input type="hidden" name="eid" id="eid" class="text" value="<?php echo ($eid);?>"</div>
+                <div class="inputSec"><input type="hidden" name="eid" id="eid" class="text" value="<?php echo ($eid);?>"></div>
+                <div class="inputSec"><input type="hidden" name="oPic" id="oPic" class="text" value="<?php echo ($ePic);?>"></div>
                 <input type="hidden" name="Type"  id="Type" class="text" value="<?php echo ($eType);?>">
                 <br>
                 <input type="submit" value="create"> 

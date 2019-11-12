@@ -60,7 +60,7 @@
             </div>
             <div class="rightColumn">
                 <div class="pic">
-                    <img src="..\Sources\Images\413977.jpg"  class="eventPic">
+                    <img src="<?php echo $sPic;?>"  class="eventPic">
                 </div>
                 Num of Students:
                 <br>

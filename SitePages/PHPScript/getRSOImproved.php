@@ -1,5 +1,5 @@
 <?php
-    $error = "";
+    $orName = $desc = $pic = $num = $sid = $error = "";
     
     error_log("hi");
 

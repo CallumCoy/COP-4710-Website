@@ -4,18 +4,19 @@
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($pic,PATHINFO_EXTENSION));
         
+
+    // Check if file already exists
+    if (file_exists($pic)) {
+        error_log("Sorry, file already exists.");
+        $uploadOk = 2;
+    }
+    
     $check = getimagesize($_FILES["uploadImage"]["tmp_name"]);
     if($check !== false) {
         error_log("File is an image - " . $check["mime"] . ".");
         $uploadOk = 1;
     } else {
         error_log("File is not an image.");
-        $uploadOk = 0;
-    }
-
-    // Check if file already exists
-    if (file_exists($pic)) {
-        error_log("Sorry, file already exists.");
         $uploadOk = 0;
     }
 
@@ -30,8 +31,10 @@
         $uploadOk = 0;
     }
 
-    if ($uploadOk == 0) {
-        error_log("Sorry, your file was not uploaded.");
+    if ($uploadOk == 0 || $uploadOk == 2) {
+        if (isset($_POST['oPic']) && $uploadOk == 0) {
+            $pic = $_POST['oPic'];
+        }
     } else {
         if (move_uploaded_file($_FILES["uploadImage"]["tmp_name"], $pic)) {
             error_log("The file ". basename( $_FILES["uploadImage"]["name"]). " has been uploaded.");

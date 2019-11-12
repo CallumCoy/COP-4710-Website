@@ -103,6 +103,20 @@
                 error_log("member set? Error: " . $stmt2->error);
             }
 
+        $sid = $_SESSION["sid"];
+                            
+        $query = "  SELECT RSO_ID 
+                    FROM rso
+                    WHERE RSO_Name = $name && SchoolID = $sid";
+
+        if($get = $link->prepare($query)){
+            $get->execute();
+            $get->bind_result($RSOVal);
+            $get->store_result();
+            $get->fetch();
+            $get->close();
+        }
+
         } else {
             $error = "something really bad happened somewhere";
         }
@@ -110,5 +124,5 @@
     }
     $link->close();
     
-    header("location: /../index.php?error=". $error);#send yopu to your new RSO in future
+    header("location: /../PHPPage/LoadRSOPage.php?RSO=". $RSOVal);#send yopu to your new RSO in future
 ?>

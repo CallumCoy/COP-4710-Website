@@ -6,7 +6,7 @@
 
     $uid = $name = $desc = $pic = $error = "";
 
-    $uid = trim($_POST["uid"]);
+    $uid = trim($_SESSION["id"]);
     $Email = trim($_POST["Email"]);
     $name = trim($_POST["Name"]);
     $desc = trim($_POST["Desc"]);
@@ -26,5 +26,5 @@
         }
     } 
 
-    header("location: ../PHPPage/EditUserPage.php");
+    header("location: ../PHPPage/EventListPage.php");
 ?>

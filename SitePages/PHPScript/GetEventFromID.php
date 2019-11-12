@@ -9,7 +9,7 @@
         $stmt->bind_result($eName, $eStart, $ePic, $eLocID, $eDesc, $eType, $eHostUser, $eHostRSO, $rating);
         $stmt->store_result();
         $stmt->fetch();
-
+        
         $eDate = date("Y-m-d", strtoTime("$eStart"));
         $eHour = date("h", strtoTime("$eStart"));
         $eMin = date("m", strtoTime("$eStart"));

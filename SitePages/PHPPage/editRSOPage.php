@@ -5,8 +5,9 @@ include_once '../PHPScript/SetCookies.php';
 require_once '../PHPScript/config.php';
 
 error_log("num of gets " . count($_GET));
-$name = $desc = $pic = "";
-$num = 0;
+
+$orName = $desc = $pic = $num = $sid = $error = "";
+$rID = 0;
 
     if(isset($_GET['name'])){
         $name = $_GET['name'];
@@ -14,11 +15,15 @@ $num = 0;
     if(isset($_GET['desc'])){
         $desc = $_GET['desc'];
     }
-    if(isset($_GET['num'])){
-        $num = $_GET['num'];
+    if(isset($_GET['rID'])){
+        $rID = $_GET['rID'];
     }
 
-    if ($num != 0){
+    if(isset($_GET['RSO'])){
+        $rID = $_GET['RSO'];
+    }
+
+    if ($rID == 0){
 
         $query = "  SELECT RSO_ID
                     FROM rso
@@ -37,10 +42,8 @@ $num = 0;
             include_once '../PHPScript/checkPrios.php';
             
         } 
-    }
-
-    if ($num < 5){
-        #notify user
+    } else {
+        include "../PHPScript/getRSOImproved.php";
     }
 
 ?>
@@ -68,7 +71,7 @@ $num = 0;
                 <div class="break"></div>
 
                 <div class="section"> Name: </div>
-                <div class="inputSec"><input type="text" name="Name" id="Name" class="text" value="<?php echo $name; ?>" required></div>
+                <div class="inputSec"><input type="text" name="Name" id="Name" class="text" value="<?php echo $orName; ?>" required></div>
                 <div class="break"> </div><!-- -->
 
                 <div class="section"> Desc: </div>
@@ -152,6 +155,7 @@ $num = 0;
                 <div class="section"> Room: </div>
                 <div class="inputSec"><input type="text" name="Room" id="Room" class="text"></div>
                 -->
+                <div class="inputSec"><input type="hidden" name="oPic" id="oPic" class="text" value="<?php echo ($pic);?>"></div>
                 <input type="submit" value="create"> 
             </form>
         </div>

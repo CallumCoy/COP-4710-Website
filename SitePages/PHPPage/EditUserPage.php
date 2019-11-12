@@ -53,7 +53,8 @@
                 <div class="inputSec"><textarea name="Desc" id="Desc" class="bigTextBox" wrap="hard" value=""><?php echo $uBio; ?></textarea></div>
                 <div class="break"></div>
 
-                <div class="inputSec"><input type="hidden" name="uid" id="uid" class="text" value="<?php echo ($sid);?>"</div>
+                <div class="inputSec"><input type="hidden" name="uid" id="uid" class="text" value="<?php echo ($_SESSION['sid']);?>"></div>
+                <div class="inputSec"><input type="hidden" name="oPic" id="oPic" class="text" value="<?php echo ($uPic);?>"></div>
                 
                 <input type="submit" value="Update"> 
             </form>

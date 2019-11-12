@@ -49,16 +49,17 @@
 
     $query =   'SELECT 1
                 FROM events
-                WHERE MainLocationID = ? && Start_Time = ?';
+                WHERE EventID != ? && MainLocationID = ? && Start_Time = ?';
 
     if($check = $link->prepare($query)){
          
-        $check->bind_param('is', $lid, $time);
+        $check->bind_param('iis', $eid, $lid, $time);
         $check->execute();
         $check->store_result();
 
         if($check->num_rows == 0){
-            if($eid != 0){
+            error_log("eid = $eid");
+            if($eid > 0){
                 error_Log("1 row");
 
                 $query = "  SELECT approved
@@ -78,9 +79,11 @@
                 $query = "  UPDATE events
                             SET EventName = ?, Start_Time = ?, EventPic = ?, EventDesc = ?, InviteType = ?, HostingUserID = ?, Host_RSO_ID = ?, approved = ?, MainLocationID = ?
                             WHERE EventID = ?";
+
                     error_log("file updated? Error: " . $query);
                     error_log("file updated? admin level: " . $admin);
                     error_log("file updated? admin level: " . $lid);
+                    error_log("file updated? Error: " . $desc);
 
                 if($admin > 0){
                     $admin = 1;

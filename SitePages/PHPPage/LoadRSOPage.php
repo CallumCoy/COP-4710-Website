@@ -78,7 +78,7 @@
             </div>
             <div class="rightColumn">
                 <div class="pic">
-                    <img src="..\Sources\Images\413977.jpg"  class="eventPic">
+                    <img src="<?php echo $pic;?>"  class="eventPic">
                 </div>
                 Num of Members:
                 <br>

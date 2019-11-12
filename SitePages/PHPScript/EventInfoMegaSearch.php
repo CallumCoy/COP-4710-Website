@@ -31,8 +31,11 @@
         $date = $_GET['StartDate'];
         $interval = " - INTERVAL 2 HOUR";
         $numOfGets = $numOfGets - 1;
-
-    } elseif(isset($_GET["Old"]) && $_GET["Old"] == 0){
+        
+        if(isset($_GET["Old"])){
+            $numOfGets = $numOfGets - 1;
+        }
+    } elseif(isset($_GET["Old"]) && $_GET["Old"] == 'on'){
         $interval = " - INTERVAL 1 DAY";
         $date = "2000-01-01";
         $numOfGets = $numOfGets - 1;
@@ -45,9 +48,11 @@
         $date = date("Y-m-d");
         $interval = " - INTERVAL 1 DAY";
     }
-    date_default_timezone_set('US/Eastern');
-    $search = $search . "Start_Time >= " . date(strtoTime("$date $time"));
-        
+
+    $search = $search . "UNIX_TIMESTAMP(Start_Time) >= " . date(strtoTime("$date $time"));
+    error_log("$date $time");
+    error_log(strtoTime("$date $time"));
+    error_log(date('Y-m-d H:i:s',strtoTime("$date $time")));
     error_log("numofgets = " . $numOfGets);
 
     if($numOfGets != 0){

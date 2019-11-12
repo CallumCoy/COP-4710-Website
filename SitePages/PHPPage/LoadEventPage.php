@@ -9,6 +9,8 @@
     }
 
     include_once '../PHPScript/GetEventFromID.php';
+    $rID = $_GET['Event'];
+    
 ?>
 <html>
     <head>

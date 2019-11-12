@@ -4,13 +4,13 @@
 
     $uid = $rid = $name = $desc = $pic = $Lat = $Long = $Building = $Floor = $Room = $eid = $error = "";
 
-    $sid = trim($_POST["eid"]);
-    $uid = trim($_POST["uid"]);
+    $sid = trim($_POST["sid"]);
+    $uid = trim($_SESSION["id"]);
     $name = trim($_POST["Name"]);
     $desc = trim($_POST["Desc"]);
     $Lat = trim($_POST["Lat"]);
     $Long = trim($_POST["Long"]);
-    $SchoolExt = trim($_POST["SchoolExt"]);
+    $SchoolExt = trim($_POST["EmailExt"]);
     if ($sid < 1){
         $sid = NULL;
     }
@@ -21,7 +21,7 @@
 
     #does this data already exist?
 
-    if($sid != NULL && $admin > 1){
+    if($sid != NULL && $sid > 0 && $admin > 1){
         error_Log("1 row");
 
 
@@ -31,7 +31,7 @@
             error_log("file updated? Error: " . $query);
 
         if($stmt2 = $link->prepare($query)){
-            $stmt2->bind_param("sssiisi", $name, $pic, $desc, $Lat, $Long, $SchoolExt);
+            $stmt2->bind_param("sssiisi", $name, $pic, $desc, $Lat, $Long, $SchoolExt, $sid);
             error_log("file updated? Error: " . $pic);
             error_log("file updated? Error: " . $desc);
             $stmt2->execute();
@@ -42,15 +42,28 @@
     } elseif($admin > 1) {
                             
         $query = "  INSERT INTO school
-                    VALUES (default, ?, ?, ?, 1, 0, ?, ?, ?)";
+                    VALUES (default, ?, ?, ?, 0, 0, ?, ?, ?)";
 
         if($make = $link->prepare($query)){
-            $make->bind_param("sssiisi", $name, $pic, $desc, $Lat, $Long, $SchoolExt);
+            $make->bind_param("sssiis", $name, $pic, $desc, $Lat, $Long, $SchoolExt);
             $make->execute();
             $make->close();
         }
+        
                             
-        $query = "  INSERT INTO super_amdins
+        $query = "  SELECT SchoolID 
+                    FROM school
+                    WHERE School_Lat = $Lat && School_Long = $Long";
+
+        if($get = $link->prepare($query)){
+            $get->execute();
+            $get->bind_result($sid);
+            $get->store_result();
+            $get->fetch();
+            $get->close();
+        }
+                            
+        $query = "  INSERT INTO super_admins
                     VALUES (?, ?)";
 
         if($make = $link->prepare($query)){
@@ -63,5 +76,6 @@
     }
     error_log("file updated? Error: " . $link->error);
     $link->close();
-
+    
+    header("location: ../PHPPage/LoadSchool.php?sid=$sid")
 ?>
