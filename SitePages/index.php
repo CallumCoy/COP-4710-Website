@@ -1,7 +1,8 @@
 <?php
+header("location: /PHPPage/EventListPage.php");
     session_start();
-    include_once __DIR__ . '/PHPScript/SetCookies.php';
     require_once "PHPScript/config.php";
+    include_once __DIR__ . '/PHPScript/SetCookies.php';
 ?>
 <html>
     <head>
@@ -35,7 +36,7 @@
         <div class="eventList col-EventList">
             <div class="event">
                 <div class="eventPicDiv">
-                    <img src="Sources\Images\413977.jpg" alt="Space" class="eventPic">
+                    <img src="Sources\Images\413977.jpg"  class="eventPic">
                 </div>
                 <div class="information">
                     <h3>Event Name</h3>

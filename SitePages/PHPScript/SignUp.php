@@ -1,5 +1,6 @@
 <?php
     require_once "config.php";
+    $sid = $emailExt = "";
 
     // Define the variables and set to empty values
     $email = $username = $password = $confirmPassword = $schoolID = "";

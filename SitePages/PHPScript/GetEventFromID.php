@@ -19,15 +19,18 @@
                     FROM locations
                     WHERE locID = ?";
 
-        if($stmt = $link->prepare($query)){
-            $stmt->bind_param('i', $eLocID);
-            $stmt->execute();
-            $stmt->bind_result($eLocID, $eLat, $eLong, $eBuild, $eFloor, $eRoom);
-            $stmt->store_result();
-            $stmt->fetch();
+        if($stmt2 = $link->prepare($query)){
+            $stmt2->bind_param('i', $eLocID);
+            $stmt2->execute();
+            $stmt2->bind_result($eLocID, $eLat, $eLong, $eBuild, $eFloor, $eRoom);
+            $stmt2->store_result();
+            $stmt2->fetch();
+            $stmt2->close();
         }
-
+        
+        $stmt->close();
         error_log($eName . ' ' . $_GET['Event']);
+        error_log($eName . ' ' . $eLocID);
     } else {
         header("location: ../index.php?error=event not found.");
     }

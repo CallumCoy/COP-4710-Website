@@ -8,8 +8,11 @@
         error_log('event ID = ' . $eid);
     }
 
+    $elid = "";
+
     include_once '../PHPScript/GetEventFromID.php';
     $rID = $_GET['Event'];
+    error_log("$elid")
     
 ?>
 <html>
@@ -48,9 +51,12 @@
             <div class="leftColumn">
                 <div class="desc">
                     <pre>
-                        <?php echo ($eDesc .'
+                        <?php 
+                                echo ($eDesc .'
                                     <br>'.
                                     date("F jS Y | h:i A", strtotime("$eStart"))) .
+                                    '<br>Lat: ' . $eLat . 'Long: ' . $eLong .
+                                    '<br>Building: ' . $eBuild . ' | Floor: ' . $eBuild . ' | Room: ' . $eRoom .
                                     '<br>' .
                                     $rating .'/5';
                         ?>
@@ -109,8 +115,8 @@
                                 echo ('</div>
                                 </div>');
                             }    
+                            $getRso->close();
                         }
-                        $getRso->close();
                     }else {
 
                            error_log("$query, $link->error");
@@ -169,6 +175,7 @@
                         $find->store_result();
                         
                         error_log($_GET['Event']);
+                        error_log($find->num_rows());
 
                         echo "";
 

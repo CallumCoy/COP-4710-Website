@@ -84,6 +84,7 @@ div.commentSection{
 }
 
 div.commentBox{
+    top: 200px;
     width: calc(100%-60px);
     max-width: calc(100%-60px);
     margin: 10px;
@@ -196,6 +197,7 @@ input.signUp:hover{
 
 div.commentPopUp{
     left: calc(50% - 300px);
+    top: 100px;
     width: 600px;
     min-height: 300px;
     margin: auto;

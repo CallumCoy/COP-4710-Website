@@ -38,7 +38,7 @@
                                     
                                     <pre>' . $review . '</pre>
                                 </div>
-                                <div class="timeStamp"> ' . date("F jS Y | h:i A", strtotime("$eStart")) . ' </div>
+                                <div class="timeStamp"> ' . date("F jS Y | h:i A", strtotime("$postTime")) . ' </div>
                             </div>
                             <div class="break"></div>
                             <div class="rating">' . $rate . '/5 </div>
