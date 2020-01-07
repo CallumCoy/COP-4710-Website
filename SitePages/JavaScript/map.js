@@ -1,4 +1,4 @@
-const __KEY = "AIzaSyBIY0b4bKUEcux9O822gFjvSwREmpGgJ1s";
+const __KEY = "~~REMOVED~~";
 const mapArea = document.getElementById('map');
 let Gmap, Gmarker;
 
